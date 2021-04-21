@@ -1,0 +1,26 @@
+plugins {
+    id 'java'
+}
+
+group 'com.epam.esm'
+version '1.0'
+
+repositories {
+    mavenCentral()
+}
+
+test {
+    useJUnitPlatform()
+}
+
+dependencies {
+    implementation project(":model")
+    implementation project(":persistence")
+    implementation group: 'org.springframework', name: 'spring-webmvc', version: '5.3.0'
+    implementation group: 'org.springframework', name: 'spring-tx', version: '5.3.0'
+    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.11.3'
+    implementation group: 'log4j', name: 'log4j', version: '1.2.17'
+    testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: '5.7.1'
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.7.1")
+    testImplementation group: 'org.mockito', name: 'mockito-core', version: '2.22.0'
+}

@@ -1,0 +1,15 @@
+{
+    "id": 3,
+    "name": "SPA2",
+    "description": "New cert2",
+    "price": 10.0,
+    "createDate": 1617899198.000000000,
+    "lastUpdateDate": 1617899203.000000000,
+    "duration": 10,
+    "tags": [
+        {
+            "id": 1,
+            "name": "TestTag"
+        }
+    ]
+}

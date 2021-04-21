@@ -1,0 +1,5 @@
+CREATE TABLE IF NOT EXISTS Tags (
+        ID int NOT NULL AUTO_INCREMENT UNIQUE,
+        Name varchar(45) NOT NULL UNIQUE,
+        PRIMARY KEY (ID)
+);

@@ -1,0 +1,3 @@
+DROP TABLE IF EXISTS CertificateDetails;
+DROP TABLE IF EXISTS GiftCertificates;
+DROP TABLE IF EXISTS Tags;
