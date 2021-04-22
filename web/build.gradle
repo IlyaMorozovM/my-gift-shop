@@ -15,7 +15,7 @@ test {
 }
 
 dependencies {
-    implementation project(":persistence")
+    implementation project(":dataaccess")
     implementation project(":service")
     implementation project(":model")
     implementation group: 'org.json', name: 'json', version: '20200518'

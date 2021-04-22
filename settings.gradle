@@ -1,2 +1,2 @@
 rootProject.name = 'Gift_shop'
-include('persistence', 'model', 'service', 'web')
+include('dataaccess', 'model', 'service', 'web')
