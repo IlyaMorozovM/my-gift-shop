@@ -105,7 +105,7 @@ public class GiftCertificateDaoImpl implements GiftCertificateDAO {
     }
 
     @Override
-    public GiftCertificate getGiftCertificate(int id) {
+    public GiftCertificate getGiftCertificate(long id) {
         return jdbcTemplate.queryForObject(SQL_GET_CERTIFICATE_BY_ID, mapper, id);
     }
 
@@ -173,7 +173,7 @@ public class GiftCertificateDaoImpl implements GiftCertificateDAO {
     }
 
     @Override
-    public boolean deleteGiftCertificate(int id) {
+    public boolean deleteGiftCertificate(long id) {
         return jdbcTemplate.update(SQL_DELETE_CERTIFICATE, id) == 1;
     }
 
@@ -206,12 +206,12 @@ public class GiftCertificateDaoImpl implements GiftCertificateDAO {
     }
 
     @Override
-    public boolean createCertificateTagRelation(int certificateId, int tagId) {
+    public boolean createCertificateTagRelation(long certificateId, long tagId) {
         return jdbcTemplate.update(SQL_CREATE_JOIN, certificateId, tagId) == 1;
     }
 
     @Override
-    public void deleteAllCertificateTagRelations(int certificateId) {
+    public void deleteAllCertificateTagRelations(long certificateId) {
         jdbcTemplate.update(SQL_DELETE_JOIN, certificateId);
     }
 }

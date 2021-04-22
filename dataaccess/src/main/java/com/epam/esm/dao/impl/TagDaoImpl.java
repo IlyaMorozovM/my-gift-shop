@@ -39,7 +39,7 @@ public class TagDaoImpl implements TagDao {
     }
 
     @Override
-    public Tag getTag(int id) {
+    public Tag getTag(long id) {
         return jdbcTemplate.queryForObject(SQL_GET_TAG_BY_ID, tagRowMapper, id);
     }
 
@@ -65,7 +65,7 @@ public class TagDaoImpl implements TagDao {
     }
 
     @Override
-    public boolean deleteTag(int tagId) {
+    public boolean deleteTag(long tagId) {
         return jdbcTemplate.update(SQL_DELETE_TAG, tagId) == 1;
     }
 }

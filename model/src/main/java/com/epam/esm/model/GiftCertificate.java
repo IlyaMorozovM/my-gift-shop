@@ -7,7 +7,7 @@ import java.util.Set;
 
 public class GiftCertificate {
 
-    private int id;
+    private long id;
     private String name;
     private String description;
     private double price;
@@ -16,11 +16,11 @@ public class GiftCertificate {
     private int duration;
     private Set<Tag> tags = new HashSet<>();
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
