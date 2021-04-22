@@ -12,7 +12,9 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Component;
 
-import java.sql.*;
+import java.sql.PreparedStatement;
+import java.sql.Statement;
+import java.sql.Timestamp;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
@@ -22,67 +24,67 @@ import java.util.List;
 public class GiftCertificateDaoImpl implements GiftCertificateDAO {
 
     private static final String SQL_GET_CERTIFICATE_BY_ID =
-            "select * from GiftCertificates " +
-            "left join CertificateDetails " +
-            "on GiftCertificates.ID = CertificateDetails.CertificateID " +
-            "left join Tags " +
-            "on Tags.ID = CertificateDetails.TagID " +
-            "where GiftCertificates.ID = ?";
+            "SELECT * FROM GiftCertificates " +
+            "LEFT JOIN CertificateDetails " +
+            "ON GiftCertificates.ID = CertificateDetails.CertificateID " +
+            "LEFT JOIN Tags " +
+            "ON Tags.ID = CertificateDetails.TagID " +
+            "WHERE GiftCertificates.ID = ?";
 
     private static final String SQL_GET_CERTIFICATE_BY_NAME =
-            "select * from GiftCertificates " +
-            "left join CertificateDetails " +
-            "on GiftCertificates.ID = CertificateDetails.CertificateID " +
-            "left join Tags " +
-            "on Tags.ID = CertificateDetails.TagID " +
-            "where GiftCertificates.Name = ?";
+            "SELECT * FROM GiftCertificates " +
+            "LEFT JOIN CertificateDetails " +
+            "ON GiftCertificates.ID = CertificateDetails.CertificateID " +
+            "LEFT JOIN Tags " +
+            "ON Tags.ID = CertificateDetails.TagID " +
+            "WHERE GiftCertificates.Name = ?";
 
     private static final String SQL_GET_ALL_CERTIFICATES =
-            "select * from GiftCertificates " +
-            "left join CertificateDetails " +
-            "on GiftCertificates.ID = CertificateDetails.CertificateID " +
-            "left join Tags " +
-            "on Tags.ID = CertificateDetails.TagID ";
+            "SELECT * FROM GiftCertificates " +
+            "LEFT JOIN CertificateDetails " +
+            "ON GiftCertificates.ID = CertificateDetails.CertificateID " +
+            "LEFT JOIN Tags " +
+            "ON Tags.ID = CertificateDetails.TagID ";
 
     private static final String SQL_GET_ALL_CERTIFICATES_BY_CONTENT =
-            "select * from GiftCertificates " +
-            "left join CertificateDetails " +
-            "on GiftCertificates.ID = CertificateDetails.CertificateID " +
-            "left join Tags " +
-            "on Tags.ID = CertificateDetails.TagID " +
-            "where GiftCertificates.Name like ? or Description like ? ";
+            "SELECT * FROM GiftCertificates " +
+            "LEFT JOIN CertificateDetails " +
+            "ON GiftCertificates.ID = CertificateDetails.CertificateID " +
+            "LEFT JOIN Tags " +
+            "ON Tags.ID = CertificateDetails.TagID " +
+            "WHERE GiftCertificates.Name LIKE ? OR Description LIKE ? ";
 
     private static final String SQL_GET_CERTIFICATES_BY_TAG_NAME =
-            "select * from GiftCertificates " +
-            "join CertificateDetails on GiftCertificates.ID = CertificateDetails.CertificateID " +
-            "join Tags on Tags.ID = CertificateDetails.TagID " +
-            "where CertificateDetails.CertificateID in " +
+            "SELECT * FROM GiftCertificates " +
+            "JOIN CertificateDetails ON GiftCertificates.ID = CertificateDetails.CertificateID " +
+            "JOIN Tags ON Tags.ID = CertificateDetails.TagID " +
+            "WHERE CertificateDetails.CertificateID IN " +
             "( " +
-            "select CertificateDetails.CertificateID from CertificateDetails " +
-            "join Tags on Tags.ID = CertificateDetails.TagID " +
-            "where Tags.name = ?" +
+            "SELECT CertificateDetails.CertificateID FROM CertificateDetails " +
+            "JOIN Tags ON Tags.ID = CertificateDetails.TagID " +
+            "WHERE Tags.name = ?" +
             ")";
 
     private static final String SQL_ADD_CERTIFICATE =
-            "insert into GiftCertificates " +
+            "INSERT INTO GiftCertificates " +
             "(Name, Description, Price, CreateDate, LastUpdateDate, Duration) " +
-            "values (?, ?, ?, ?, ?, ?)";
+            "VALUES (?, ?, ?, ?, ?, ?)";
 
     private static final String SQL_DELETE_CERTIFICATE =
-            "delete from GiftCertificates where (ID = ?)";
+            "DELETE FROM GiftCertificates WHERE (ID = ?)";
 
     private static final String SQL_UPDATE_CERTIFICATE =
-            "update GiftCertificates " +
-            "set Name = IFNULL(?, Name), Description = IFNULL(?, Description)," +
+            "UPDATE GiftCertificates " +
+            "SET Name = IFNULL(?, Name), Description = IFNULL(?, Description)," +
             "Price = IFNULL(?, Price), LastUpdateDate = IFNULL(?, LastUpdateDate), " +
             "Duration = IFNULL(?, Duration) " +
-            "where (ID = ?)";
+            "WHERE (ID = ?)";
 
     private static final String SQL_CREATE_JOIN =
-            "insert into CertificateDetails (CertificateID, TagID) values (?, ?)";
+            "INSERT INTO CertificateDetails (CertificateID, TagID) VALUES (?, ?)";
 
     private static final String SQL_DELETE_JOIN =
-            "delete from CertificateDetails where (CertificateID = ?)";
+            "DELETE FROM CertificateDetails WHERE (CertificateID = ?)";
 
     private final JdbcTemplate jdbcTemplate;
     private final ResultSetExtractor<List<GiftCertificate>> extractor;

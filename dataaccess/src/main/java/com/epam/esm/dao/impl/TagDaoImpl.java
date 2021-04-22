@@ -20,11 +20,11 @@ import java.util.List;
 @Component
 public class TagDaoImpl implements TagDao {
 
-    private static final String SQL_GET_ALL_TAGS = "select Id, Name from Tags";
-    private static final String SQL_GET_TAG_BY_NAME = "select Id, Name from Tags where Name = ?";
-    private static final String SQL_GET_TAG_BY_ID = "select Id, Name from Tags where Id = ?";
-    private static final String SQL_ADD_TAG = "insert into Tags (Name) values (?)";
-    private static final String SQL_DELETE_TAG = "delete from Tags where ID = ?";
+    private static final String SQL_GET_ALL_TAGS = "SELECT Id, Name FROM Tags";
+    private static final String SQL_GET_TAG_BY_NAME = "SELECT Id, Name FROM Tags WHERE Name = ?";
+    private static final String SQL_GET_TAG_BY_ID = "SELECT Id, Name FROM Tags WHERE Id = ?";
+    private static final String SQL_ADD_TAG = "INSERT INTO Tags (Name) VALUES (?)";
+    private static final String SQL_DELETE_TAG = "DELETE FROM Tags WHERE ID = ?";
 
     private final JdbcTemplate jdbcTemplate;
     private final RowMapper<Tag> tagRowMapper;
