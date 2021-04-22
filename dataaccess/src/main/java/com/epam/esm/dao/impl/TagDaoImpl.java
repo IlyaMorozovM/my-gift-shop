@@ -5,8 +5,6 @@ import com.epam.esm.dao.exception.ErrorCodeEnum;
 import com.epam.esm.dao.exception.PersistenceException;
 import com.epam.esm.model.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
@@ -20,11 +18,11 @@ import java.util.List;
 @Component
 public class TagDaoImpl implements TagDao {
 
-    private static final String SQL_GET_ALL_TAGS = "SELECT Id, Name FROM Tags";
-    private static final String SQL_GET_TAG_BY_NAME = "SELECT Id, Name FROM Tags WHERE Name = ?";
-    private static final String SQL_GET_TAG_BY_ID = "SELECT Id, Name FROM Tags WHERE Id = ?";
-    private static final String SQL_ADD_TAG = "INSERT INTO Tags (Name) VALUES (?)";
-    private static final String SQL_DELETE_TAG = "DELETE FROM Tags WHERE ID = ?";
+    private static final String SQL_GET_ALL_TAGS = "SELECT id, name FROM Tags";
+    private static final String SQL_GET_TAG_BY_NAME = "SELECT id, name FROM Tags WHERE name = ?";
+    private static final String SQL_GET_TAG_BY_ID = "SELECT id, name FROM Tags WHERE id = ?";
+    private static final String SQL_ADD_TAG = "INSERT INTO Tags (name) VALUES (?)";
+    private static final String SQL_DELETE_TAG = "DELETE FROM Tags WHERE id = ?";
 
     private final JdbcTemplate jdbcTemplate;
     private final RowMapper<Tag> tagRowMapper;

@@ -16,16 +16,16 @@ import java.util.Map;
 
 public class GiftCertificateExtractorUtil {
 
-    private static final String CERTIFICATE_ID_COLUMN = "ID";
-    private static final String CERTIFICATE_NAME_COLUMN = "Name";
-    private static final String CERTIFICATE_DESCRIPTION_COLUMN = "Description";
-    private static final String CERTIFICATE_PRICE_COLUMN = "Price";
-    private static final String CERTIFICATE_CREATE_DATE_COLUMN = "CreateDate";
-    private static final String CERTIFICATE_LAST_UPDATE_DATE_COLUMN = "LastUpdateDate";
-    private static final String CERTIFICATE_DURATION_COLUMN = "Duration";
+    private static final String CERTIFICATE_ID_COLUMN = "id";
+    private static final String CERTIFICATE_NAME_COLUMN = "name";
+    private static final String CERTIFICATE_DESCRIPTION_COLUMN = "description";
+    private static final String CERTIFICATE_PRICE_COLUMN = "price";
+    private static final String CERTIFICATE_CREATE_DATE_COLUMN = "create_date";
+    private static final String CERTIFICATE_LAST_UPDATE_DATE_COLUMN = "last_update_date";
+    private static final String CERTIFICATE_DURATION_COLUMN = "duration";
 
-    private static final String TAG_ID_COLUMN = "TAGS.ID";
-    private static final String TAG_NAME_COLUMN = "TAGS.Name";
+    private static final String TAG_ID_COLUMN = "tags.id";
+    private static final String TAG_NAME_COLUMN = "tags.name";
 
     private GiftCertificateExtractorUtil(){
     }

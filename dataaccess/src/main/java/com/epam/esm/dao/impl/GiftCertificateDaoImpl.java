@@ -24,67 +24,67 @@ import java.util.List;
 public class GiftCertificateDaoImpl implements GiftCertificateDAO {
 
     private static final String SQL_GET_CERTIFICATE_BY_ID =
-            "SELECT * FROM GiftCertificates " +
-            "LEFT JOIN CertificateDetails " +
-            "ON GiftCertificates.ID = CertificateDetails.CertificateID " +
-            "LEFT JOIN Tags " +
-            "ON Tags.ID = CertificateDetails.TagID " +
-            "WHERE GiftCertificates.ID = ?";
+            "SELECT * FROM gift_certificates " +
+            "LEFT JOIN certificate_details " +
+            "ON gift_certificates.id = certificate_details.certificate_id " +
+            "LEFT JOIN tags " +
+            "ON tags.id = certificate_details.tag_id " +
+            "WHERE gift_certificates.id = ?";
 
     private static final String SQL_GET_CERTIFICATE_BY_NAME =
-            "SELECT * FROM GiftCertificates " +
-            "LEFT JOIN CertificateDetails " +
-            "ON GiftCertificates.ID = CertificateDetails.CertificateID " +
-            "LEFT JOIN Tags " +
-            "ON Tags.ID = CertificateDetails.TagID " +
-            "WHERE GiftCertificates.Name = ?";
+            "SELECT * FROM gift_certificates " +
+            "LEFT JOIN certificate_details " +
+            "ON gift_certificates.id = certificate_details.certificate_id " +
+            "LEFT JOIN tags " +
+            "ON tags.id = certificate_details.tag_id " +
+            "WHERE gift_certificates.name = ?";
 
     private static final String SQL_GET_ALL_CERTIFICATES =
-            "SELECT * FROM GiftCertificates " +
-            "LEFT JOIN CertificateDetails " +
-            "ON GiftCertificates.ID = CertificateDetails.CertificateID " +
-            "LEFT JOIN Tags " +
-            "ON Tags.ID = CertificateDetails.TagID ";
+            "SELECT * FROM gift_certificates " +
+            "LEFT JOIN certificate_details " +
+            "ON gift_certificates.id = certificate_details.certificate_id " +
+            "LEFT JOIN tags " +
+            "ON tags.id = certificate_details.tag_id ";
 
     private static final String SQL_GET_ALL_CERTIFICATES_BY_CONTENT =
-            "SELECT * FROM GiftCertificates " +
-            "LEFT JOIN CertificateDetails " +
-            "ON GiftCertificates.ID = CertificateDetails.CertificateID " +
-            "LEFT JOIN Tags " +
-            "ON Tags.ID = CertificateDetails.TagID " +
-            "WHERE GiftCertificates.Name LIKE ? OR Description LIKE ? ";
+            "SELECT * FROM gift_certificates " +
+            "LEFT JOIN certificate_details " +
+            "ON gift_certificates.id = certificate_details.certificate_id " +
+            "LEFT JOIN tags " +
+            "ON tags.id = certificate_details.tag_id " +
+            "WHERE gift_certificates.name LIKE ? OR description LIKE ? ";
 
     private static final String SQL_GET_CERTIFICATES_BY_TAG_NAME =
-            "SELECT * FROM GiftCertificates " +
-            "JOIN CertificateDetails ON GiftCertificates.ID = CertificateDetails.CertificateID " +
-            "JOIN Tags ON Tags.ID = CertificateDetails.TagID " +
-            "WHERE CertificateDetails.CertificateID IN " +
+            "SELECT * FROM gift_certificates " +
+            "JOIN certificate_details ON gift_certificates.id = certificate_details.certificate_id " +
+            "JOIN tags ON tags.id = certificate_details.tag_id " +
+            "WHERE certificate_details.certificate_id IN " +
             "( " +
-            "SELECT CertificateDetails.CertificateID FROM CertificateDetails " +
-            "JOIN Tags ON Tags.ID = CertificateDetails.TagID " +
-            "WHERE Tags.name = ?" +
+            "SELECT certificate_details.certificate_id FROM certificate_details " +
+            "JOIN tags ON Tags.id = certificate_details.tag_id " +
+            "WHERE tags.name = ?" +
             ")";
 
     private static final String SQL_ADD_CERTIFICATE =
-            "INSERT INTO GiftCertificates " +
-            "(Name, Description, Price, CreateDate, LastUpdateDate, Duration) " +
+            "INSERT INTO gift_certificates " +
+            "(name, description, price, create_date, last_update_date, duration) " +
             "VALUES (?, ?, ?, ?, ?, ?)";
 
     private static final String SQL_DELETE_CERTIFICATE =
-            "DELETE FROM GiftCertificates WHERE (ID = ?)";
+            "DELETE FROM gift_certificates WHERE (id = ?)";
 
     private static final String SQL_UPDATE_CERTIFICATE =
-            "UPDATE GiftCertificates " +
-            "SET Name = IFNULL(?, Name), Description = IFNULL(?, Description)," +
-            "Price = IFNULL(?, Price), LastUpdateDate = IFNULL(?, LastUpdateDate), " +
-            "Duration = IFNULL(?, Duration) " +
-            "WHERE (ID = ?)";
+            "UPDATE gift_certificates " +
+            "SET name = IFNULL(?, name), description = IFNULL(?, description)," +
+            "price = IFNULL(?, price), last_update_date = IFNULL(?, last_update_date), " +
+            "duration = IFNULL(?, duration) " +
+            "WHERE (id = ?)";
 
     private static final String SQL_CREATE_JOIN =
-            "INSERT INTO CertificateDetails (CertificateID, TagID) VALUES (?, ?)";
+            "INSERT INTO certificate_details (certificate_id, tag_id) VALUES (?, ?)";
 
     private static final String SQL_DELETE_JOIN =
-            "DELETE FROM CertificateDetails WHERE (CertificateID = ?)";
+            "DELETE FROM certificate_details WHERE (certificate_id = ?)";
 
     private final JdbcTemplate jdbcTemplate;
     private final ResultSetExtractor<List<GiftCertificate>> extractor;
@@ -128,12 +128,12 @@ public class GiftCertificateDaoImpl implements GiftCertificateDAO {
 
     @Override
     public List<GiftCertificate> getAllGiftCertificatesSortedByName(boolean isAscending) {
-        return getAllGiftCertificatesSortedByParameter("GiftCertificates.Name", isAscending);
+        return getAllGiftCertificatesSortedByParameter("gift_certificates.name", isAscending);
     }
 
     @Override
     public List<GiftCertificate> getAllGiftCertificatesSortedByDate(boolean isAscending) {
-        return getAllGiftCertificatesSortedByParameter("CreateDate", isAscending);
+        return getAllGiftCertificatesSortedByParameter("create_date", isAscending);
     }
 
     private List<GiftCertificate> getAllGiftCertificatesSortedByParameter(

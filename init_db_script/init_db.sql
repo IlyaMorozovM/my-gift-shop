@@ -11,8 +11,8 @@ create table giftcertificates
         unique (ID)
 );
 
-alter table giftcertificates
-    add primary key (ID);
+alter table gift_certificates
+    add primary key (id);
 
 create table tags
 (
@@ -25,7 +25,7 @@ create table tags
 );
 
 alter table tags
-    add primary key (ID);
+    add primary key (id);
 
 create table certificatedetails
 (
@@ -33,11 +33,11 @@ create table certificatedetails
     CertificateID int not null,
     primary key (TagID, CertificateID),
     constraint FK_Certificate_Id
-        foreign key (CertificateID) references giftcertificates (ID),
+        foreign key (CertificateID) references gift_certificates (id),
     constraint FK_Tag_Id
-        foreign key (TagID) references tags (ID)
+        foreign key (TagID) references tags (id)
 );
 
 create index FK_Certificate_Id_idx
-    on certificatedetails (CertificateID);
+    on certificate_details (certificate_id);
 
