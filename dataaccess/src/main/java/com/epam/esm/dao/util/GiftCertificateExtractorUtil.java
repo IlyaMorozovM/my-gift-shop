@@ -9,7 +9,7 @@ import java.sql.Timestamp;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -31,7 +31,7 @@ public class GiftCertificateExtractorUtil {
     }
 
     public static List<GiftCertificate> extractGiftCertificates(ResultSet rs) throws SQLException {
-        Map<Integer, GiftCertificate> map = new LinkedHashMap<>();
+        Map<Integer, GiftCertificate> map = new HashMap<>();
         while (rs.next()) {
             setCertificateToMap(rs, map);
         }
@@ -40,7 +40,7 @@ public class GiftCertificateExtractorUtil {
     }
 
     public static GiftCertificate extractGiftCertificate(ResultSet rs) throws SQLException {
-        Map<Integer, GiftCertificate> map = new LinkedHashMap<>();
+        Map<Integer, GiftCertificate> map = new HashMap<>();
         do {
             setCertificateToMap(rs, map);
         } while (rs.next());
