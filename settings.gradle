@@ -1,2 +1,2 @@
 rootProject.name = 'Gift_shop'
-include('dataaccess', 'model', 'service', 'web')
+include('dataaccess', 'service', 'web')
