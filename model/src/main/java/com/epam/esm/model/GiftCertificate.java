@@ -1,6 +1,5 @@
 package com.epam.esm.model;
 
-import java.math.BigDecimal;
 import java.time.ZonedDateTime;
 import java.util.HashSet;
 import java.util.Objects;
@@ -8,20 +7,20 @@ import java.util.Set;
 
 public class GiftCertificate {
 
-    private long id;
+    private int id;
     private String name;
     private String description;
-    private BigDecimal price;
+    private double price;
     private ZonedDateTime createDate;
     private ZonedDateTime lastUpdateDate;
     private int duration;
     private Set<Tag> tags = new HashSet<>();
 
-    public long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -41,11 +40,11 @@ public class GiftCertificate {
         this.description = description;
     }
 
-    public BigDecimal getPrice() {
+    public double getPrice() {
         return price;
     }
 
-    public void setPrice(BigDecimal price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 

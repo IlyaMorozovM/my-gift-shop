@@ -65,7 +65,7 @@ public class GiftCertificateExtractorUtil {
         giftCertificate.setId(rs.getInt(CERTIFICATE_ID_COLUMN));
         giftCertificate.setName(rs.getString(CERTIFICATE_NAME_COLUMN));
         giftCertificate.setDescription(rs.getString(CERTIFICATE_DESCRIPTION_COLUMN));
-        giftCertificate.setPrice(rs.getBigDecimal(CERTIFICATE_PRICE_COLUMN));
+        giftCertificate.setPrice(rs.getDouble(CERTIFICATE_PRICE_COLUMN));
         giftCertificate.setCreateDate(
                 ZonedDateTime.ofInstant(
                         ((Timestamp) rs.getObject(CERTIFICATE_CREATE_DATE_COLUMN)).toInstant(),

@@ -12,7 +12,6 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Component;
 
-import java.math.BigDecimal;
 import java.sql.PreparedStatement;
 import java.sql.Statement;
 import java.sql.Timestamp;
@@ -106,7 +105,7 @@ public class GiftCertificateDaoImpl implements GiftCertificateDAO {
     }
 
     @Override
-    public GiftCertificate getGiftCertificate(long id) {
+    public GiftCertificate getGiftCertificate(int id) {
         return jdbcTemplate.queryForObject(SQL_GET_CERTIFICATE_BY_ID, mapper, id);
     }
 
@@ -152,15 +151,15 @@ public class GiftCertificateDaoImpl implements GiftCertificateDAO {
             PreparedStatement ps = connection.prepareStatement(SQL_ADD_CERTIFICATE, Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, giftCertificate.getName());
             ps.setString(2, giftCertificate.getDescription());
-            ps.setBigDecimal(3, giftCertificate.getPrice());
+            ps.setDouble(3, giftCertificate.getPrice());
             ps.setTimestamp(4,
                     Timestamp.valueOf(DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss")
                             .format(ZonedDateTime.ofInstant(
-                                    giftCertificate.getLastUpdateDate().toInstant(), ZoneOffset.of("-03:00")))));
+                                    giftCertificate.getLastUpdateDate().toInstant(), ZoneOffset.UTC))));
             ps.setTimestamp(5,
                     Timestamp.valueOf(DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss")
                             .format(ZonedDateTime.ofInstant(
-                                    giftCertificate.getLastUpdateDate().toInstant(), ZoneOffset.of("-03:00")))));
+                                    giftCertificate.getLastUpdateDate().toInstant(), ZoneOffset.UTC))));
             ps.setInt(6, giftCertificate.getDuration());
             return ps;
         }, holder);
@@ -174,7 +173,7 @@ public class GiftCertificateDaoImpl implements GiftCertificateDAO {
     }
 
     @Override
-    public boolean deleteGiftCertificate(long id) {
+    public boolean deleteGiftCertificate(int id) {
         return jdbcTemplate.update(SQL_DELETE_CERTIFICATE, id) == 1;
     }
 
@@ -189,13 +188,13 @@ public class GiftCertificateDaoImpl implements GiftCertificateDAO {
         params[0] = giftCertificate.getName();
         params[1] = giftCertificate.getDescription();
 
-        if (giftCertificate.getPrice().compareTo(BigDecimal.ZERO) != 0) {
+        if (giftCertificate.getPrice() != 0) {
             params[2] = giftCertificate.getPrice();
         }
 
         params[3] = DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss")
                 .format(ZonedDateTime.ofInstant(
-                        giftCertificate.getLastUpdateDate().toInstant(), ZoneOffset.of("-03:00")));
+                        giftCertificate.getLastUpdateDate().toInstant(), ZoneOffset.UTC));
 
         if (giftCertificate.getDuration() != 0) {
             params[4] = giftCertificate.getDuration();
@@ -207,12 +206,12 @@ public class GiftCertificateDaoImpl implements GiftCertificateDAO {
     }
 
     @Override
-    public boolean createCertificateTagRelation(long certificateId, long tagId) {
+    public boolean createCertificateTagRelation(int certificateId, int tagId) {
         return jdbcTemplate.update(SQL_CREATE_JOIN, certificateId, tagId) == 1;
     }
 
     @Override
-    public void deleteAllCertificateTagRelations(long certificateId) {
+    public void deleteAllCertificateTagRelations(int certificateId) {
         jdbcTemplate.update(SQL_DELETE_JOIN, certificateId);
     }
 }

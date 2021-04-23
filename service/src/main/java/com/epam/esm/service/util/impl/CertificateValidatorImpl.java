@@ -6,7 +6,6 @@ import com.epam.esm.service.exception.ServiceException;
 import com.epam.esm.service.util.CertificateValidator;
 import org.springframework.stereotype.Component;
 
-import java.math.BigDecimal;
 import java.time.ZonedDateTime;
 
 @Component
@@ -47,8 +46,8 @@ public class CertificateValidatorImpl implements CertificateValidator {
         }
     }
 
-    private void validatePrice(BigDecimal price) throws ServiceException{
-        if (price.compareTo(BigDecimal.ZERO) < 0) {
+    private void validatePrice(double price) throws ServiceException{
+        if (price < 0) {
             throw new ServiceException("Failed to validate: certificate price is negative",
                     ErrorCodeEnum.CERTIFICATE_VALIDATION_ERROR);
         }
