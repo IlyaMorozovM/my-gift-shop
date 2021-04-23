@@ -32,7 +32,7 @@ public interface TagDao {
      * @param id tag id.
      * @return Tag.
      */
-    Tag getTag(long id);
+    Tag getTag(int id);
 
     /**
      * Retrieves all Tag from data source.
@@ -56,5 +56,5 @@ public interface TagDao {
      * @param tagId id of a Tag which to delete from data source.
      * @return whether deleting was successful.
      */
-    boolean deleteTag(long tagId);
+    boolean deleteTag(int tagId);
 }

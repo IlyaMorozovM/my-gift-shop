@@ -43,7 +43,7 @@ public class TagServiceImpl implements TagService {
     }
 
     @Override
-    public Tag getTag(long id) throws ServiceException {
+    public Tag getTag(int id) throws ServiceException {
         tagValidator.validateId(id);
         try {
             return tagDao.getTag(id);
@@ -81,7 +81,7 @@ public class TagServiceImpl implements TagService {
     }
 
     @Override
-    public void deleteTag(long tagId) throws ServiceException {
+    public void deleteTag(int tagId) throws ServiceException {
         tagValidator.validateId(tagId);
         try {
             if (!tagDao.deleteTag(tagId)) {

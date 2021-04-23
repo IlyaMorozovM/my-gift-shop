@@ -31,7 +31,7 @@ public class GiftCertificateExtractorUtil {
     }
 
     public static List<GiftCertificate> extractGiftCertificates(ResultSet rs) throws SQLException {
-        Map<Long, GiftCertificate> map = new LinkedHashMap<>();
+        Map<Integer, GiftCertificate> map = new LinkedHashMap<>();
         while (rs.next()) {
             setCertificateToMap(rs, map);
         }
@@ -40,7 +40,7 @@ public class GiftCertificateExtractorUtil {
     }
 
     public static GiftCertificate extractGiftCertificate(ResultSet rs) throws SQLException {
-        Map<Long, GiftCertificate> map = new LinkedHashMap<>();
+        Map<Integer, GiftCertificate> map = new LinkedHashMap<>();
         do {
             setCertificateToMap(rs, map);
         } while (rs.next());
@@ -48,7 +48,7 @@ public class GiftCertificateExtractorUtil {
         return new ArrayList<>(map.values()).get(0);
     }
 
-    private static void setCertificateToMap(ResultSet rs, Map<Long, GiftCertificate> map)
+    private static void setCertificateToMap(ResultSet rs, Map<Integer, GiftCertificate> map)
             throws SQLException {
         GiftCertificate giftCertificate = map.get(rs.getInt(CERTIFICATE_ID_COLUMN));
         if (giftCertificate == null) {

@@ -32,7 +32,7 @@ public interface GiftCertificateDAO {
      * @param id certificate id.
      * @return GiftCertificate.
      */
-    GiftCertificate getGiftCertificate(long id);
+    GiftCertificate getGiftCertificate(int id);
 
     /**
      * Retrieves all GiftCertificate from data source.
@@ -93,7 +93,7 @@ public interface GiftCertificateDAO {
      * @param id id of GiftCertificate which to deleted from data source.
      * @return whether transaction was successful.
      */
-    boolean deleteGiftCertificate(long id);
+    boolean deleteGiftCertificate(int id);
 
     /**
      * Updates GiftCertificate in data source.
@@ -111,12 +111,12 @@ public interface GiftCertificateDAO {
      * @param tagId Tag id  which to create a many to many relation with.
      * @return whether transaction was successful.
      */
-    boolean createCertificateTagRelation(long certificateId, long tagId);
+    boolean createCertificateTagRelation(int certificateId, int tagId);
 
     /**
      * Deletes many to many relation with GiftCertificate and Tag.
      *
      * @param certificateId GiftCertificate id which to delete a many to many relation with.
      */
-    void deleteAllCertificateTagRelations(long certificateId);
+    void deleteAllCertificateTagRelations(int certificateId);
 }

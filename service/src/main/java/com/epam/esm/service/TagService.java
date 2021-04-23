@@ -34,7 +34,7 @@ public interface TagService {
      * @throws ServiceException when failed to get Tag from persistence layer.
      * @return Tag.
      */
-    Tag getTag(long id) throws ServiceException;
+    Tag getTag(int id) throws ServiceException;
 
     /**
      * Retrieves all Tag from persistence layer.
@@ -59,5 +59,5 @@ public interface TagService {
      * @param tagId id of a Tag which to delete from persistence layer.
      * @throws ServiceException when failed to delete Tag from persistence layer.
      */
-    void deleteTag(long tagId) throws ServiceException;
+    void deleteTag(int tagId) throws ServiceException;
 }

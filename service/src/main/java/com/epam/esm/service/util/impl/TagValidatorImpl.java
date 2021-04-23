@@ -18,7 +18,7 @@ public class TagValidatorImpl implements TagValidator {
         validateName(tag.getName());
     }
 
-    public void validateId(long id) throws ServiceException {
+    public void validateId(int id) throws ServiceException {
         if (id < 0) {
             //TODO: without error code
             throw new ServiceException("Failed to validate: tag id is negative",

@@ -26,7 +26,7 @@ public class CertificateValidatorImpl implements CertificateValidator {
         validateDuration(giftCertificate.getDuration());
     }
 
-    public void validateId(long id) throws ServiceException {
+    public void validateId(int id) throws ServiceException {
         if (id < 0) {
             throw new ServiceException("Failed to validate: certificate id is negative",
                     ErrorCodeEnum.CERTIFICATE_VALIDATION_ERROR);

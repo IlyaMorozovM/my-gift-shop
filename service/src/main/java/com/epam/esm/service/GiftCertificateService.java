@@ -35,7 +35,7 @@ public interface GiftCertificateService {
      * @throws ServiceException when failed to get GiftCertificate from persistence layer.
      * @return GiftCertificate.
      */
-    GiftCertificate getGiftCertificate(long id) throws ServiceException;
+    GiftCertificate getGiftCertificate(int id) throws ServiceException;
 
     /**
      * Retrieves all GiftCertificate from persistence layer.

@@ -5,7 +5,7 @@ import com.epam.esm.service.exception.ServiceException;
 
 public interface CertificateValidator {
     void validateCertificate(GiftCertificate giftCertificate) throws ServiceException;
-    void validateId(long id) throws ServiceException;
+    void validateId(int id) throws ServiceException;
     void validateName(String name) throws ServiceException;
     void validateDescription(String description) throws ServiceException;
 }

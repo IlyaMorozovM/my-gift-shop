@@ -55,7 +55,7 @@ public class GiftCertificateServiceImpl implements GiftCertificateService {
     }
 
     @Override
-    public GiftCertificate getGiftCertificate(long id) throws ServiceException {
+    public GiftCertificate getGiftCertificate(int id) throws ServiceException {
         certificateValidator.validateId(id);
         try {
             return giftCertificateDAO.getGiftCertificate(id);
