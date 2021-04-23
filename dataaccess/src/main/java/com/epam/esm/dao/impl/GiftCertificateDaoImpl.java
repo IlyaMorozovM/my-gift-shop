@@ -12,6 +12,7 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Component;
 
+import java.math.BigDecimal;
 import java.sql.PreparedStatement;
 import java.sql.Statement;
 import java.sql.Timestamp;
@@ -151,7 +152,7 @@ public class GiftCertificateDaoImpl implements GiftCertificateDAO {
             PreparedStatement ps = connection.prepareStatement(SQL_ADD_CERTIFICATE, Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, giftCertificate.getName());
             ps.setString(2, giftCertificate.getDescription());
-            ps.setDouble(3, giftCertificate.getPrice());
+            ps.setBigDecimal(3, giftCertificate.getPrice());
             ps.setTimestamp(4,
                     Timestamp.valueOf(DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss")
                             .format(ZonedDateTime.ofInstant(
@@ -188,7 +189,7 @@ public class GiftCertificateDaoImpl implements GiftCertificateDAO {
         params[0] = giftCertificate.getName();
         params[1] = giftCertificate.getDescription();
 
-        if (giftCertificate.getPrice() != 0) {
+        if (giftCertificate.getPrice().compareTo(BigDecimal.ZERO) != 0) {
             params[2] = giftCertificate.getPrice();
         }
 

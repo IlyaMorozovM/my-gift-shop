@@ -19,6 +19,7 @@ import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 
 import javax.sql.DataSource;
+import java.math.BigDecimal;
 import java.time.Instant;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
@@ -73,7 +74,7 @@ class GiftCertificateDaoImplTest {
         GiftCertificate certificate = new GiftCertificate();
         certificate.setName("Tour to Greece");
         certificate.setDescription("Certificate description");
-        certificate.setPrice(99.99);
+        certificate.setPrice(new BigDecimal("99.99"));
 
         certificate.setCreateDate(ZonedDateTime.ofInstant(Instant.now(), ZoneOffset.UTC));
         certificate.setLastUpdateDate(certificate.getCreateDate());
@@ -90,7 +91,7 @@ class GiftCertificateDaoImplTest {
     private void assertEqualsWithoutUpdateDate(GiftCertificate actual, GiftCertificate expected) {
         assertEquals(actual.getId(), expected.getId());
         assertEquals(actual.getName(), expected.getName());
-        assertEquals(actual.getPrice(), expected.getPrice(), 0.0001);
+        assertEquals(actual.getPrice(), expected.getPrice());
         assertEquals(actual.getDuration(), expected.getDuration());
         assertEquals(actual.getTags(), expected.getTags());
         assertTrue(equalDates(actual.getCreateDate(), expected.getCreateDate()));
@@ -105,7 +106,7 @@ class GiftCertificateDaoImplTest {
     private void assertEqualsCertificates(GiftCertificate actual, GiftCertificate expected) {
         assertEquals(actual.getId(), expected.getId());
         assertEquals(actual.getName(), expected.getName());
-        assertEquals(actual.getPrice(), expected.getPrice(), 0.0001);
+        assertEquals(actual.getPrice(), expected.getPrice());
         assertEquals(actual.getDuration(), expected.getDuration());
         assertEquals(actual.getTags(), expected.getTags());
 
@@ -200,7 +201,7 @@ class GiftCertificateDaoImplTest {
         given.setId(giftCertificateDAO.addGiftCertificate(given));
         given.setName("new name");
         given.setDescription("new description");
-        given.setPrice(199.99);
+        given.setPrice(new BigDecimal("199.99"));
         given.setDuration(99);
         given.getTags().add(tagDao.getTag("spa"));
         for (Tag tag: given.getTags()) {
