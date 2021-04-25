@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequestMapping("/tags")
 public class TagController {
 
     private final TagService tagService;
@@ -18,22 +19,22 @@ public class TagController {
         this.tagService = tagService;
     }
 
-    @GetMapping(value = "/tags")
+    @GetMapping
     public List<Tag> getTags() throws ServiceException {
         return tagService.getAllTags();
     }
 
-    @GetMapping("/tags/{id}")
+    @GetMapping("/{id}")
     public Tag getTag(@PathVariable int id) throws ServiceException {
         return tagService.getTag(id);
     }
 
-    @PostMapping("/tags")
+    @PostMapping
     public Tag addTag(@RequestBody Tag tag) throws ServiceException {
         return tagService.addTag(tag);
     }
 
-    @DeleteMapping("/tags/{id}")
+    @DeleteMapping("/{id}")
     public HttpStatus deleteTag(@PathVariable int id) throws ServiceException {
         tagService.deleteTag(id);
         return HttpStatus.OK;

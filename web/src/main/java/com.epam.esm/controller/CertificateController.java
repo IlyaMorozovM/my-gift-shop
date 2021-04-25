@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequestMapping("/certificates")
 public class CertificateController {
 
     private final GiftCertificateService giftCertificateService;
@@ -20,29 +21,29 @@ public class CertificateController {
         this.giftCertificateService = giftCertificateService;
     }
 
-    @GetMapping("/certificates")
+    @GetMapping
     public List<GiftCertificate> getGiftCertificates(
             @RequestBody(required = false) CertificateRequestBody request) throws ServiceException {
            return giftCertificateService.getGiftCertificates(request);
     }
 
-    @GetMapping("/certificates/{id}")
+    @GetMapping("/{id}")
     public GiftCertificate getGiftCertificate(@PathVariable int id) throws ServiceException {
         return giftCertificateService.getGiftCertificate(id);
     }
 
-    @PostMapping("/certificates")
+    @PostMapping
     public GiftCertificate addGiftCertificate(@RequestBody GiftCertificate giftCertificate) throws ServiceException {
         return giftCertificateService.addGiftCertificate(giftCertificate);
     }
 
-    @DeleteMapping("/certificates/{id}")
+    @DeleteMapping("/{id}")
     public HttpStatus deleteGiftCertificate( @PathVariable int id) throws ServiceException {
         giftCertificateService.deleteGiftCertificate(id);
         return HttpStatus.OK;
     }
 
-    @PutMapping("/certificates/{id}")
+    @PutMapping("/{id}")
     public GiftCertificate updateGiftCertificate(
             @RequestBody GiftCertificate giftCertificate, @PathVariable int id) throws ServiceException {
         return giftCertificateService.updateGiftCertificate(giftCertificate, id);

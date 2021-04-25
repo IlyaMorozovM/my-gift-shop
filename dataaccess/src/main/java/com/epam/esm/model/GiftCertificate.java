@@ -87,7 +87,7 @@ public class GiftCertificate {
         if (o == null || getClass() != o.getClass()) return false;
         GiftCertificate that = (GiftCertificate) o;
         return id == that.id &&
-                price == that.price &&
+                price.equals(that.price) &&
                 duration == that.duration &&
                 name.equals(that.name) &&
                 description.equals(that.description) &&
