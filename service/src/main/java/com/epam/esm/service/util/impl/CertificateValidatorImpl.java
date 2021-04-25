@@ -7,7 +7,6 @@ import com.epam.esm.service.util.CertificateValidator;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
-import java.time.ZonedDateTime;
 
 @Component
 public class CertificateValidatorImpl implements CertificateValidator {
@@ -22,7 +21,6 @@ public class CertificateValidatorImpl implements CertificateValidator {
         validateName(giftCertificate.getName());
         validateDescription(giftCertificate.getDescription());
         validatePrice(giftCertificate.getPrice());
-        validateCreateAndUpdateDates(giftCertificate.getCreateDate(), giftCertificate.getLastUpdateDate());
         validateDuration(giftCertificate.getDuration());
     }
 
@@ -50,21 +48,6 @@ public class CertificateValidatorImpl implements CertificateValidator {
     private void validatePrice(BigDecimal price) throws ServiceException{
         if (price.compareTo(BigDecimal.ZERO) < 0) {
             throw new ServiceException("Failed to validate: certificate price is negative",
-                    ErrorCodeEnum.CERTIFICATE_VALIDATION_ERROR);
-        }
-    }
-
-    private void validateCreateAndUpdateDates(ZonedDateTime createDate, ZonedDateTime updateDate)
-            throws ServiceException {
-        if (createDate == null && updateDate == null) {
-            return;
-        }
-        if (createDate == null) {
-            throw new ServiceException("Failed to validate: certificate create date is null while update date isn't",
-                    ErrorCodeEnum.CERTIFICATE_VALIDATION_ERROR);
-        }
-        if (updateDate.isBefore(createDate)) {
-            throw new ServiceException("Failed to validate: certificate update date is before create date",
                     ErrorCodeEnum.CERTIFICATE_VALIDATION_ERROR);
         }
     }

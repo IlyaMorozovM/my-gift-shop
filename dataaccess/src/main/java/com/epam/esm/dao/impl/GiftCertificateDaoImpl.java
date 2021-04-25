@@ -137,7 +137,7 @@ public class GiftCertificateDaoImpl implements GiftCertificateDAO {
 
     private List<GiftCertificate> getAllGiftCertificatesSortedByParameter(
             String parameter, boolean isAscending) {
-        String sql = SQL_GET_ALL_CERTIFICATES + "order by " + parameter + " ";
+        String sql = SQL_GET_ALL_CERTIFICATES + "ORDER BY " + parameter + " ";
         sql += isAscending ? "ASC" : "DESC";
 
         return jdbcTemplate.query(sql, extractor);
