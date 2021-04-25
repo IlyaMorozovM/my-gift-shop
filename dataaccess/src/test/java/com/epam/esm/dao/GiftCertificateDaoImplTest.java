@@ -52,9 +52,9 @@ class GiftCertificateDaoImplTest {
         giftCertificateDAO = new GiftCertificateDaoImpl(
                 jdbcTemplate, new GiftCertificateExtractor(), new GiftCertificateMapper());
 
-        tagDao.addTag(new Tag("spa"));
-        tagDao.addTag(new Tag("relax"));
-        tagDao.addTag(new Tag("tourism"));
+        tagDao.create(new Tag("spa"));
+        tagDao.create(new Tag("relax"));
+        tagDao.create(new Tag("tourism"));
     }
 
     private List<GiftCertificate> initCertificates(int size) {
@@ -81,8 +81,8 @@ class GiftCertificateDaoImplTest {
         certificate.setDuration(10);
 
         Set<Tag> tags = new HashSet<>();
-        tags.add(tagDao.getTag("tourism"));
-        tags.add(tagDao.getTag("relax"));
+        tags.add(tagDao.get("tourism"));
+        tags.add(tagDao.get("relax"));
         certificate.setTags(tags);
 
         return certificate;
@@ -126,12 +126,12 @@ class GiftCertificateDaoImplTest {
     void whenAddGiftCertificate_thenCorrectlyReturnItById() throws PersistenceException {
         GiftCertificate given = initCertificate();
 
-        given.setId(giftCertificateDAO.addGiftCertificate(given));
+        given.setId(giftCertificateDAO.create(given));
         for (Tag tag: given.getTags()) {
             giftCertificateDAO.createCertificateTagRelation(given.getId(), tag.getId());
         }
 
-        GiftCertificate actual = giftCertificateDAO.getGiftCertificate(given.getId());
+        GiftCertificate actual = giftCertificateDAO.get(given.getId());
         assertEqualsCertificates(given, actual);
     }
 
@@ -139,12 +139,12 @@ class GiftCertificateDaoImplTest {
     void whenAddGiftCertificate_thenCorrectlyReturnItByName() throws PersistenceException {
         GiftCertificate given = initCertificate();
 
-        given.setId(giftCertificateDAO.addGiftCertificate(given));
+        given.setId(giftCertificateDAO.create(given));
         for (Tag tag: given.getTags()) {
             giftCertificateDAO.createCertificateTagRelation(given.getId(), tag.getId());
         }
 
-        GiftCertificate actual = giftCertificateDAO.getGiftCertificate(given.getName());
+        GiftCertificate actual = giftCertificateDAO.get(given.getName());
         assertEqualsCertificates(given, actual);
     }
 
@@ -153,14 +153,14 @@ class GiftCertificateDaoImplTest {
         List<GiftCertificate> given = initCertificates(10);
 
         for (GiftCertificate certificate: given) {
-            certificate.setId(giftCertificateDAO.addGiftCertificate(certificate));
+            certificate.setId(giftCertificateDAO.create(certificate));
 
             for (Tag tag: certificate.getTags()) {
                 giftCertificateDAO.createCertificateTagRelation(certificate.getId(), tag.getId());
             }
         }
 
-        List<GiftCertificate> actual = giftCertificateDAO.getGiftCertificateByTagName("relax");
+        List<GiftCertificate> actual = giftCertificateDAO.getByTagName("relax");
         assertEqualsCertificateLists(given, actual);
     }
 
@@ -168,13 +168,13 @@ class GiftCertificateDaoImplTest {
     void whenAddGiftCertificate_thenCorrectlyDeleteIt() throws PersistenceException {
         GiftCertificate given = initCertificate();
 
-        given.setId(giftCertificateDAO.addGiftCertificate(given));
+        given.setId(giftCertificateDAO.create(given));
         for (Tag tag: given.getTags()) {
             giftCertificateDAO.createCertificateTagRelation(given.getId(), tag.getId());
         }
 
         giftCertificateDAO.deleteAllCertificateTagRelations(given.getId());
-        boolean actual = giftCertificateDAO.deleteGiftCertificate(given.getId());
+        boolean actual = giftCertificateDAO.delete(given.getId());
         assertTrue(actual);
     }
 
@@ -183,14 +183,14 @@ class GiftCertificateDaoImplTest {
         List<GiftCertificate> given = initCertificates(20);
 
         for (GiftCertificate certificate: given) {
-            certificate.setId(giftCertificateDAO.addGiftCertificate(certificate));
+            certificate.setId(giftCertificateDAO.create(certificate));
 
             for (Tag tag: certificate.getTags()) {
                 giftCertificateDAO.createCertificateTagRelation(certificate.getId(), tag.getId());
             }
         }
 
-        List<GiftCertificate> actual = giftCertificateDAO.getAllGiftCertificates();
+        List<GiftCertificate> actual = giftCertificateDAO.getAll();
         assertEqualsCertificateLists(given, actual);
     }
 
@@ -198,18 +198,18 @@ class GiftCertificateDaoImplTest {
     void whenAddGiftCertificate_thenCorrectlyUpdateIt() throws PersistenceException {
         GiftCertificate given = initCertificate();
 
-        given.setId(giftCertificateDAO.addGiftCertificate(given));
+        given.setId(giftCertificateDAO.create(given));
         given.setName("new name");
         given.setDescription("new description");
         given.setPrice(new BigDecimal("199.99"));
         given.setDuration(99);
-        given.getTags().add(tagDao.getTag("spa"));
+        given.getTags().add(tagDao.get("spa"));
         for (Tag tag: given.getTags()) {
             giftCertificateDAO.createCertificateTagRelation(given.getId(), tag.getId());
         }
 
-        giftCertificateDAO.updateGiftCertificate(given);
-        GiftCertificate actual = giftCertificateDAO.getGiftCertificate(given.getId());
+        giftCertificateDAO.update(given);
+        GiftCertificate actual = giftCertificateDAO.get(given.getId());
         assertEqualsWithoutUpdateDate(given, actual);
     }
 
@@ -218,14 +218,14 @@ class GiftCertificateDaoImplTest {
         List<GiftCertificate> given = initCertificates(10);
 
         for (GiftCertificate certificate: given) {
-            certificate.setId(giftCertificateDAO.addGiftCertificate(certificate));
+            certificate.setId(giftCertificateDAO.create(certificate));
 
             for (Tag tag: certificate.getTags()) {
                 giftCertificateDAO.createCertificateTagRelation(certificate.getId(), tag.getId());
             }
         }
 
-        List<GiftCertificate> actual = giftCertificateDAO.getAllGiftCertificatesSortedByDate(true);
+        List<GiftCertificate> actual = giftCertificateDAO.getAllSortedByDate(true);
         assertEqualsCertificateLists(given, actual);
     }
 
@@ -234,14 +234,14 @@ class GiftCertificateDaoImplTest {
         List<GiftCertificate> given = initCertificates(10);
 
         for (GiftCertificate certificate: given) {
-            certificate.setId(giftCertificateDAO.addGiftCertificate(certificate));
+            certificate.setId(giftCertificateDAO.create(certificate));
 
             for (Tag tag: certificate.getTags()) {
                 giftCertificateDAO.createCertificateTagRelation(certificate.getId(), tag.getId());
             }
         }
 
-        List<GiftCertificate> actual = giftCertificateDAO.getAllGiftCertificatesSortedByDate(false);
+        List<GiftCertificate> actual = giftCertificateDAO.getAllSortedByDate(false);
         assertEqualsCertificateLists(given, actual);
     }
 
@@ -251,14 +251,14 @@ class GiftCertificateDaoImplTest {
 
         for (int i = 0; i < given.size(); i++) {
             given.get(i).setName(String.valueOf(i));
-            given.get(i).setId(giftCertificateDAO.addGiftCertificate(given.get(i)));
+            given.get(i).setId(giftCertificateDAO.create(given.get(i)));
 
             for (Tag tag:  given.get(i).getTags()) {
                 giftCertificateDAO.createCertificateTagRelation(given.get(i).getId(), tag.getId());
             }
         }
 
-        List<GiftCertificate> actual = giftCertificateDAO.getAllGiftCertificatesSortedByName(true);
+        List<GiftCertificate> actual = giftCertificateDAO.getAllSortedByName(true);
         assertEqualsCertificateLists(given, actual);
     }
 
@@ -268,7 +268,7 @@ class GiftCertificateDaoImplTest {
 
         for (int i = 0; i < given.size(); i++) {
             given.get(i).setName(String.valueOf(i));
-            given.get(i).setId(giftCertificateDAO.addGiftCertificate(given.get(i)));
+            given.get(i).setId(giftCertificateDAO.create(given.get(i)));
 
             for (Tag tag:  given.get(i).getTags()) {
                 giftCertificateDAO.createCertificateTagRelation(given.get(i).getId(), tag.getId());
@@ -276,7 +276,7 @@ class GiftCertificateDaoImplTest {
         }
 
         Collections.reverse(given);
-        List<GiftCertificate> actual = giftCertificateDAO.getAllGiftCertificatesSortedByName(false);
+        List<GiftCertificate> actual = giftCertificateDAO.getAllSortedByName(false);
         assertEqualsCertificateLists(given, actual);
     }
 
@@ -285,14 +285,14 @@ class GiftCertificateDaoImplTest {
         List<GiftCertificate> given = initCertificates(10);
 
         for (GiftCertificate certificate: given) {
-            certificate.setId(giftCertificateDAO.addGiftCertificate(certificate));
+            certificate.setId(giftCertificateDAO.create(certificate));
 
             for (Tag tag: certificate.getTags()) {
                 giftCertificateDAO.createCertificateTagRelation(certificate.getId(), tag.getId());
             }
         }
 
-        List<GiftCertificate> actual = giftCertificateDAO.getAllGiftCertificates("Certificate description");
+        List<GiftCertificate> actual = giftCertificateDAO.getAll("Certificate description");
         assertEqualsCertificateLists(given, actual);
     }
 }

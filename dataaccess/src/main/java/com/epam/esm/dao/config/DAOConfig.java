@@ -47,11 +47,6 @@ public class DAOConfig {
         private int maxPoolSize;
 
         @Bean
-        public static PropertySourcesPlaceholderConfigurer placeHolderConfigurer() {
-            return new PropertySourcesPlaceholderConfigurer();
-        }
-
-        @Bean
         public DataSource dataSource() {
             HikariConfig cfg = new HikariConfig();
             cfg.setDriverClassName(driver);

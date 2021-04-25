@@ -2,13 +2,13 @@ package com.epam.esm.service.impl;
 
 import com.epam.esm.dao.GiftCertificateDAO;
 import com.epam.esm.dao.TagDao;
+import com.epam.esm.dao.exception.ErrorCodeEnum;
 import com.epam.esm.dao.exception.PersistenceException;
 import com.epam.esm.model.GiftCertificate;
 import com.epam.esm.model.Tag;
-import com.epam.esm.service.request.CertificateRequestBody;
-import com.epam.esm.dao.exception.ErrorCodeEnum;
 import com.epam.esm.service.GiftCertificateService;
 import com.epam.esm.service.exception.ServiceException;
+import com.epam.esm.service.request.CertificateRequestBody;
 import com.epam.esm.service.request.SortParameter;
 import com.epam.esm.service.request.SortType;
 import com.epam.esm.service.util.CertificateValidator;
@@ -16,7 +16,6 @@ import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
-import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
@@ -25,7 +24,6 @@ import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-@Service
 public class GiftCertificateServiceImpl implements GiftCertificateService {
 
     private static final Logger LOGGER = LogManager.getLogger(GiftCertificateServiceImpl.class);
@@ -46,7 +44,7 @@ public class GiftCertificateServiceImpl implements GiftCertificateService {
     public GiftCertificate getGiftCertificate(String name) throws ServiceException {
         certificateValidator.validateName(name);
         try {
-            return giftCertificateDAO.getGiftCertificate(name);
+            return giftCertificateDAO.get(name);
         } catch (DataAccessException e) {
             LOGGER.error("Following exception was thrown in getGiftCertificate(String name): " + e.getMessage());
             throw new ServiceException("Failed to get certificate by it name: " + name,
@@ -58,7 +56,7 @@ public class GiftCertificateServiceImpl implements GiftCertificateService {
     public GiftCertificate getGiftCertificate(int id) throws ServiceException {
         certificateValidator.validateId(id);
         try {
-            return giftCertificateDAO.getGiftCertificate(id);
+            return giftCertificateDAO.get(id);
         } catch (DataAccessException e) {
             LOGGER.error("Following exception was thrown in getGiftCertificate(int id): " + e.getMessage());
             throw new ServiceException("Failed to get certificate by it id: " + id,
@@ -69,7 +67,7 @@ public class GiftCertificateServiceImpl implements GiftCertificateService {
     @Override
     public List<GiftCertificate> geAllCertificates() throws ServiceException {
         try {
-            return giftCertificateDAO.getAllGiftCertificates();
+            return giftCertificateDAO.getAll();
         } catch (DataAccessException e) {
             LOGGER.error("Following exception was thrown in getAllGiftCertificates(): " + e.getMessage());
             throw new ServiceException("Failed to get all certificates", ErrorCodeEnum.FAILED_TO_RETRIEVE_CERTIFICATE);
@@ -83,7 +81,7 @@ public class GiftCertificateServiceImpl implements GiftCertificateService {
         }
 
         try {
-            return giftCertificateDAO.getAllGiftCertificates(content);
+            return giftCertificateDAO.getAll(content);
         } catch (DataAccessException e) {
             LOGGER.error("Following exception was thrown in getAllGiftCertificates(String content): " + e.getMessage());
             throw new ServiceException("Failed to get certificate by it content: " + content,
@@ -95,7 +93,7 @@ public class GiftCertificateServiceImpl implements GiftCertificateService {
     public List<GiftCertificate> getGiftCertificateByTagName(String tagName) throws ServiceException {
         certificateValidator.validateName(tagName);
         try {
-            return giftCertificateDAO.getGiftCertificateByTagName(tagName);
+            return giftCertificateDAO.getByTagName(tagName);
         } catch (DataAccessException e) {
             LOGGER.error("Following exception was thrown in getGiftCertificateByTagName(): " + e.getMessage());
             throw new ServiceException("Failed to get certificate Failed to get certificate by tag name: " + tagName,
@@ -107,7 +105,7 @@ public class GiftCertificateServiceImpl implements GiftCertificateService {
     public List<GiftCertificate> getAllGiftCertificatesSortedByName(boolean isAscending)
             throws ServiceException {
         try {
-            return giftCertificateDAO.getAllGiftCertificatesSortedByName(isAscending);
+            return giftCertificateDAO.getAllSortedByName(isAscending);
         } catch (DataAccessException e) {
             LOGGER.error("Following exception was thrown in getAllGiftCertificatesSortedByName(): " + e.getMessage());
             throw new ServiceException("Failed to get certificates", ErrorCodeEnum.FAILED_TO_RETRIEVE_CERTIFICATE);
@@ -118,7 +116,7 @@ public class GiftCertificateServiceImpl implements GiftCertificateService {
     public List<GiftCertificate> getAllGiftCertificatesSortedByDate(boolean isAscending)
             throws ServiceException {
         try {
-            return giftCertificateDAO.getAllGiftCertificatesSortedByDate(isAscending);
+            return giftCertificateDAO.getAllSortedByDate(isAscending);
         } catch (DataAccessException e) {
             LOGGER.error("Following exception was thrown in getAllGiftCertificatesSortedByDate(): " + e.getMessage());
             throw new ServiceException("Failed to get certificate", ErrorCodeEnum.FAILED_TO_RETRIEVE_CERTIFICATE);
@@ -170,7 +168,7 @@ public class GiftCertificateServiceImpl implements GiftCertificateService {
             giftCertificate.setCreateDate(ZonedDateTime.ofInstant(Instant.now(), ZoneOffset.UTC));
             giftCertificate.setLastUpdateDate(giftCertificate.getCreateDate());
 
-            int id = giftCertificateDAO.addGiftCertificate(giftCertificate);
+            int id = giftCertificateDAO.create(giftCertificate);
             giftCertificate.setId(id);
 
             addNewTagsToCertificate(giftCertificate);
@@ -193,7 +191,7 @@ public class GiftCertificateServiceImpl implements GiftCertificateService {
         try {
             giftCertificateDAO.deleteAllCertificateTagRelations(giftCertificate.getId());
 
-            if (!giftCertificateDAO.deleteGiftCertificate(giftCertificate.getId())) {
+            if (!giftCertificateDAO.delete(giftCertificate.getId())) {
                 LOGGER.error("Failed to delete certificate");
                 throw new ServiceException("Failed to delete certificate", ErrorCodeEnum.FAILED_TO_DELETE_CERTIFICATE);
             }
@@ -213,7 +211,7 @@ public class GiftCertificateServiceImpl implements GiftCertificateService {
 
             addNewTagsToCertificate(giftCertificate);
 
-            if (!giftCertificateDAO.updateGiftCertificate(giftCertificate)) {
+            if (!giftCertificateDAO.update(giftCertificate)) {
                 LOGGER.error("Failed to update certificate");
                 throw new ServiceException("Failed to update certificate", ErrorCodeEnum.FAILED_TO_UPDATE_CERTIFICATE);
             }
@@ -225,10 +223,10 @@ public class GiftCertificateServiceImpl implements GiftCertificateService {
     }
 
     public void addNewTagsToCertificate(GiftCertificate giftCertificate) throws PersistenceException {
-        List<Tag> tagsInDataSource = tagDao.getAllTags();
+        List<Tag> tagsInDataSource = tagDao.getAll();
         for (Tag tag : giftCertificate.getTags()) {
             if (!tagsInDataSource.contains(tag)) {
-                tag.setId(tagDao.addTag(tag));
+                tag.setId(tagDao.create(tag));
             }
 
             try {

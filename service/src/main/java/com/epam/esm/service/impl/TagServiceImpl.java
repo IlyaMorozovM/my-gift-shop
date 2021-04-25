@@ -11,12 +11,9 @@ import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
-import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
 public class TagServiceImpl implements TagService {
 
     private static final Logger LOGGER = LogManager.getLogger(TagServiceImpl.class);
@@ -34,7 +31,7 @@ public class TagServiceImpl implements TagService {
     public Tag getTag(String name) throws ServiceException {
         tagValidator.validateName(name);
         try {
-            return tagDao.getTag(name);
+            return tagDao.get(name);
         } catch (DataAccessException e) {
             LOGGER.error("Following exception was thrown in getTag(String name): " + e.getMessage());
             throw new ServiceException("Failed to get tag by it name: " + name,
@@ -46,7 +43,7 @@ public class TagServiceImpl implements TagService {
     public Tag getTag(int id) throws ServiceException {
         tagValidator.validateId(id);
         try {
-            return tagDao.getTag(id);
+            return tagDao.get(id);
         } catch (DataAccessException e) {
             LOGGER.error("Following exception was thrown in getTag(int id): " + e.getMessage());
             throw new ServiceException("Failed to get tag by it id: " + id,
@@ -57,7 +54,7 @@ public class TagServiceImpl implements TagService {
     @Override
     public List<Tag> getAllTags() throws ServiceException {
         try {
-            return tagDao.getAllTags();
+            return tagDao.getAll();
         } catch (DataAccessException e) {
             LOGGER.error("Following exception was thrown in getAllTags(): " + e.getMessage());
             throw new ServiceException("Failed to get all tags", ErrorCodeEnum.FAILED_TO_RETRIEVE_TAG);
@@ -68,7 +65,7 @@ public class TagServiceImpl implements TagService {
     public Tag addTag(Tag tag) throws ServiceException {
         tagValidator.validateTag(tag);
         try {
-            int id = tagDao.addTag(tag);
+            int id = tagDao.create(tag);
             tag.setId(id);
             return tag;
         } catch (DataAccessException e) {
@@ -84,7 +81,7 @@ public class TagServiceImpl implements TagService {
     public void deleteTag(int tagId) throws ServiceException {
         tagValidator.validateId(tagId);
         try {
-            if (!tagDao.deleteTag(tagId)) {
+            if (!tagDao.delete(tagId)) {
                 LOGGER.error("Failed to delete tag");
                 throw new ServiceException("Failed to delete tag because it id (" + tagId + ") is not found",
                         ErrorCodeEnum.FAILED_TO_DELETE_TAG);

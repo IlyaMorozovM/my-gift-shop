@@ -22,7 +22,7 @@ public interface GiftCertificateDAO {
      * @param name certificate name.
      * @return GiftCertificate.
      */
-    GiftCertificate getGiftCertificate(String name);
+    GiftCertificate get(String name);
 
     /**
      * Retrieves data of GiftCertificate from
@@ -32,14 +32,14 @@ public interface GiftCertificateDAO {
      * @param id certificate id.
      * @return GiftCertificate.
      */
-    GiftCertificate getGiftCertificate(int id);
+    GiftCertificate get(int id);
 
     /**
      * Retrieves all GiftCertificate from data source.
      *
      * @return List<GiftCertificate> - all existing certificates in data source.
      */
-    List<GiftCertificate> getAllGiftCertificates();
+    List<GiftCertificate> getAll();
 
     /**
      * Retrieves GiftCertificate from data source
@@ -49,7 +49,7 @@ public interface GiftCertificateDAO {
      * @param content GiftCertificate name or description.
      * @return List<GiftCertificate> - existing certificates in data source.
      */
-    List<GiftCertificate> getAllGiftCertificates(String content);
+    List<GiftCertificate> getAll(String content);
 
     /**
      * Retrieves GiftCertificate from data source
@@ -58,7 +58,7 @@ public interface GiftCertificateDAO {
      * @param tagName name of a Tag.
      * @return List<GiftCertificate> - existing certificates in data source.
      */
-    List<GiftCertificate> getGiftCertificateByTagName(String tagName);
+    List<GiftCertificate> getByTagName(String tagName);
 
     /**
      * Retrieves all GiftCertificate from data source
@@ -67,7 +67,7 @@ public interface GiftCertificateDAO {
      * @param isAscending asc or desc sort.
      * @return List<GiftCertificate> - sorted certificates in data source.
      */
-    List<GiftCertificate> getAllGiftCertificatesSortedByName(boolean isAscending);
+    List<GiftCertificate> getAllSortedByName(boolean isAscending);
 
     /**
      * Retrieves all GiftCertificate from data source
@@ -76,7 +76,7 @@ public interface GiftCertificateDAO {
      * @param isAscending asc or desc sort.
      * @return List<GiftCertificate> - sorted certificates in data source.
      */
-    List<GiftCertificate> getAllGiftCertificatesSortedByDate(boolean isAscending);
+    List<GiftCertificate> getAllSortedByDate(boolean isAscending);
 
     /**
      * Adds new GiftCertificate to data source.
@@ -85,7 +85,7 @@ public interface GiftCertificateDAO {
      * @return id of a GiftCertificate from data source.
      * @throws PersistenceException when failed to add GiftCertificate to data source.
      */
-    int addGiftCertificate(GiftCertificate giftCertificate) throws PersistenceException;
+    int create(GiftCertificate giftCertificate) throws PersistenceException;
 
     /**
      * Deletes GiftCertificate from data source.
@@ -93,7 +93,7 @@ public interface GiftCertificateDAO {
      * @param id id of GiftCertificate which to deleted from data source.
      * @return whether transaction was successful.
      */
-    boolean deleteGiftCertificate(int id);
+    boolean delete(int id);
 
     /**
      * Updates GiftCertificate in data source.
@@ -102,7 +102,7 @@ public interface GiftCertificateDAO {
      * @param giftCertificate GiftCertificate which to update in data source.
      * @return whether transaction was successful.
      */
-    boolean updateGiftCertificate(GiftCertificate giftCertificate) throws PersistenceException;
+    boolean update(GiftCertificate giftCertificate) throws PersistenceException;
 
     /**
      * Creates many to many relation with GiftCertificate and Tag.

@@ -73,11 +73,11 @@ class GiftCertificateServiceImplTest {
         given.setId(1);
         given.setName("Tourism");
 
-        Mockito.when(giftCertificateDAO.getGiftCertificate(given.getId())).thenReturn(given);
+        Mockito.when(giftCertificateDAO.get(given.getId())).thenReturn(given);
 
         GiftCertificate actual = giftCertificateService.getGiftCertificate(given.getId());
         assertEquals(given, actual);
-        Mockito.verify(giftCertificateDAO).getGiftCertificate(given.getId());
+        Mockito.verify(giftCertificateDAO).get(given.getId());
     }
 
     @Test
@@ -86,11 +86,11 @@ class GiftCertificateServiceImplTest {
         given.setId(1);
         given.setName("Tourism");
 
-        Mockito.when(giftCertificateDAO.getGiftCertificate(given.getName())).thenReturn(given);
+        Mockito.when(giftCertificateDAO.get(given.getName())).thenReturn(given);
 
         GiftCertificate actual = giftCertificateService.getGiftCertificate(given.getName());
         assertEquals(given, actual);
-        Mockito.verify(giftCertificateDAO).getGiftCertificate(given.getName());
+        Mockito.verify(giftCertificateDAO).get(given.getName());
     }
 
     @Test
@@ -107,7 +107,7 @@ class GiftCertificateServiceImplTest {
 
         List<GiftCertificate> actual = giftCertificateService.geAllCertificates();
         assertEquals(given, actual);
-        Mockito.verify(giftCertificateDAO).getAllGiftCertificates();
+        Mockito.verify(giftCertificateDAO).getAll();
     }
 
     @Test
@@ -116,17 +116,17 @@ class GiftCertificateServiceImplTest {
         Tag givenTag = new Tag(1,"spa");
         int expectedId = 1;
 
-        Mockito.when(tagDao.addTag(givenTag)).thenReturn(1);
+        Mockito.when(tagDao.create(givenTag)).thenReturn(1);
         Mockito.when(giftCertificateDAO.createCertificateTagRelation(
                 givenCertificate.getId(), givenTag.getId())).thenReturn(true);
-        Mockito.when(giftCertificateDAO.addGiftCertificate(givenCertificate)).thenReturn(expectedId);
+        Mockito.when(giftCertificateDAO.create(givenCertificate)).thenReturn(expectedId);
 
         givenCertificate = giftCertificateService.addGiftCertificate(givenCertificate);
         assertEquals(expectedId, givenCertificate.getId());
-        Mockito.verify(tagDao).addTag(givenTag);
+        Mockito.verify(tagDao).create(givenTag);
         Mockito.verify(giftCertificateDAO)
                 .createCertificateTagRelation(givenCertificate.getId(), givenCertificate.getId());
-        Mockito.verify(giftCertificateDAO).addGiftCertificate(givenCertificate);
+        Mockito.verify(giftCertificateDAO).create(givenCertificate);
     }
 
     @Test
@@ -158,12 +158,12 @@ class GiftCertificateServiceImplTest {
         givenRequestBody.setSortBy(SortParameter.DATE);
         List<GiftCertificate> givenCertificates = initCertificates();
 
-        Mockito.when(giftCertificateDAO.getAllGiftCertificatesSortedByDate(true))
+        Mockito.when(giftCertificateDAO.getAllSortedByDate(true))
                 .thenReturn(givenCertificates);
 
         List<GiftCertificate> actual = giftCertificateService.getGiftCertificates(givenRequestBody);
         assertEquals(givenCertificates, actual);
-        Mockito.verify(giftCertificateDAO).getAllGiftCertificatesSortedByDate(true);
+        Mockito.verify(giftCertificateDAO).getAllSortedByDate(true);
     }
 
     @Test
@@ -174,11 +174,11 @@ class GiftCertificateServiceImplTest {
         List<GiftCertificate> givenCertificates = initCertificates();
         Collections.reverse(givenCertificates);
 
-        Mockito.when(giftCertificateDAO.getAllGiftCertificatesSortedByDate(false))
+        Mockito.when(giftCertificateDAO.getAllSortedByDate(false))
                 .thenReturn(givenCertificates);
 
         List<GiftCertificate> actual = giftCertificateService.getGiftCertificates(givenRequestBody);
         assertEquals(givenCertificates, actual);
-        Mockito.verify(giftCertificateDAO).getAllGiftCertificatesSortedByDate(false);
+        Mockito.verify(giftCertificateDAO).getAllSortedByDate(false);
     }
 }

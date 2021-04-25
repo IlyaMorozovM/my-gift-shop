@@ -30,22 +30,22 @@ class TagServiceImplTest {
     void whenGetTag_thenCorrectlyReturnItById() throws ServiceException {
         Tag given = new Tag(1, "spa");
 
-        Mockito.when(tagDao.getTag(given.getId())).thenReturn(given);
+        Mockito.when(tagDao.get(given.getId())).thenReturn(given);
 
         Tag actual = tagService.getTag(given.getId());
         assertEquals(given, actual);
-        Mockito.verify(tagDao).getTag(given.getId());
+        Mockito.verify(tagDao).get(given.getId());
     }
 
     @Test
     void whenGetTag_thenCorrectlyReturnItByName() throws ServiceException {
         Tag given = new Tag(1, "spa");
 
-        Mockito.when(tagDao.getTag(given.getName())).thenReturn(given);
+        Mockito.when(tagDao.get(given.getName())).thenReturn(given);
 
         Tag actual = tagService.getTag(given.getName());
         assertEquals(given, actual);
-        Mockito.verify(tagDao).getTag(given.getName());
+        Mockito.verify(tagDao).get(given.getName());
     }
 
 
@@ -56,11 +56,11 @@ class TagServiceImplTest {
             expected.add(new Tag(i, "Tag " + i));
         }
 
-        Mockito.when(tagDao.getAllTags()).thenReturn(expected);
+        Mockito.when(tagDao.getAll()).thenReturn(expected);
 
         List<Tag> actual = tagService.getAllTags();
         assertEquals(expected, actual);
-        Mockito.verify(tagDao).getAllTags();
+        Mockito.verify(tagDao).getAll();
     }
 
     @Test
@@ -84,6 +84,6 @@ class TagServiceImplTest {
             assertEquals("Failed to delete tag because it id ("
                     + tag.getId() +") is not found", e.getMessage());
         }
-        Mockito.verify(tagDao).deleteTag(tag.getId());
+        Mockito.verify(tagDao).delete(tag.getId());
     }
 }

@@ -36,9 +36,9 @@ class TagDaoImplTest {
     void whenAddTag_thenCorrectlyReturnItById() throws PersistenceException {
         Tag given = new Tag("Tag to return by id");
 
-        given.setId(tagDao.addTag(given));
+        given.setId(tagDao.create(given));
 
-        Tag actual = tagDao.getTag(given.getId());
+        Tag actual = tagDao.get(given.getId());
         assertEquals(given, actual);
     }
 
@@ -46,9 +46,9 @@ class TagDaoImplTest {
     void whenAddTag_thenCorrectlyReturnItByName() throws PersistenceException {
         Tag given = new Tag("Tag to return by name");
 
-        given.setId(tagDao.addTag(given));
+        given.setId(tagDao.create(given));
 
-        Tag actual = tagDao.getTag(given.getName());
+        Tag actual = tagDao.get(given.getName());
        assertEquals(given, actual);
     }
 
@@ -56,9 +56,9 @@ class TagDaoImplTest {
     void whenAddTag_thenCorrectlyDeleteIdById() throws PersistenceException {
         Tag given = new Tag("Tag to delete");
 
-        given.setId(tagDao.addTag(given));
+        given.setId(tagDao.create(given));
 
-        boolean actual = tagDao.deleteTag(given.getId());
+        boolean actual = tagDao.delete(given.getId());
         assertTrue(actual);
     }
 
@@ -66,7 +66,7 @@ class TagDaoImplTest {
     void whenAddTag_thenReturnNonZeroId() throws PersistenceException {
         Tag tag = new Tag("Tag to add");
 
-        int id = tagDao.addTag(tag);
+        int id = tagDao.create(tag);
 
         assertNotEquals(0, id);
     }
@@ -79,10 +79,10 @@ class TagDaoImplTest {
         given.add(new Tag("Third tag"));
 
         for (Tag tag: given) {
-            tag.setId(tagDao.addTag(tag));
+            tag.setId(tagDao.create(tag));
         }
 
-        List<Tag> actual = tagDao.getAllTags();
+        List<Tag> actual = tagDao.getAll();
         assertEquals(given, actual);
     }
 }

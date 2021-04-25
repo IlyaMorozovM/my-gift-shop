@@ -9,13 +9,11 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
-import org.springframework.stereotype.Component;
 
 import java.sql.PreparedStatement;
 import java.sql.Statement;
 import java.util.List;
 
-@Component
 public class TagDaoImpl implements TagDao {
 
     private static final String SQL_GET_ALL_TAGS = "SELECT id, name FROM Tags";
@@ -34,22 +32,22 @@ public class TagDaoImpl implements TagDao {
     }
 
     @Override
-    public Tag getTag(String name) {
+    public Tag get(String name) {
         return jdbcTemplate.queryForObject(SQL_GET_TAG_BY_NAME, tagRowMapper,  name );
     }
 
     @Override
-    public Tag getTag(int id) {
+    public Tag get(int id) {
         return jdbcTemplate.queryForObject(SQL_GET_TAG_BY_ID, tagRowMapper, id);
     }
 
     @Override
-    public List<Tag> getAllTags() {
+    public List<Tag> getAll() {
         return jdbcTemplate.query(SQL_GET_ALL_TAGS, tagRowMapper);
     }
 
     @Override
-    public int addTag(Tag tag) throws PersistenceException {
+    public int create(Tag tag) throws PersistenceException {
         KeyHolder holder = new GeneratedKeyHolder();
         jdbcTemplate.update(connection -> {
             PreparedStatement ps = connection.prepareStatement(SQL_ADD_TAG, Statement.RETURN_GENERATED_KEYS);
@@ -65,7 +63,7 @@ public class TagDaoImpl implements TagDao {
     }
 
     @Override
-    public boolean deleteTag(int tagId) {
+    public boolean delete(int tagId) {
         return jdbcTemplate.update(SQL_DELETE_TAG, tagId) == 1;
     }
 }

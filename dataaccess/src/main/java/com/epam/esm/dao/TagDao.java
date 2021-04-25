@@ -22,7 +22,7 @@ public interface TagDao {
      * @param name tag name.
      * @return Tag.
      */
-    Tag getTag(String name);
+    Tag get(String name);
 
     /**
      * Retrieves data of Tag from
@@ -32,14 +32,14 @@ public interface TagDao {
      * @param id tag id.
      * @return Tag.
      */
-    Tag getTag(int id);
+    Tag get(int id);
 
     /**
      * Retrieves all Tag from data source.
      *
      * @return List<Tag> - all existing tags in data source.
      */
-    List<Tag> getAllTags();
+    List<Tag> getAll();
 
     /**
      * Adds new Tag to data source.
@@ -48,7 +48,7 @@ public interface TagDao {
      * @return id of a Tag from data source.
      * @throws PersistenceException when failed to add Tag to data source.
      */
-    int addTag(Tag tag) throws PersistenceException;
+    int create(Tag tag) throws PersistenceException;
 
     /**
      * Deletes Tag from data source.
@@ -56,5 +56,5 @@ public interface TagDao {
      * @param tagId id of a Tag which to delete from data source.
      * @return whether deleting was successful.
      */
-    boolean deleteTag(int tagId);
+    boolean delete(int tagId);
 }

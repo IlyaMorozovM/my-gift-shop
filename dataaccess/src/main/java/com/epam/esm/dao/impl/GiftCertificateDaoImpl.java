@@ -10,7 +10,6 @@ import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
-import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 import java.sql.PreparedStatement;
@@ -21,7 +20,6 @@ import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
-@Component
 public class GiftCertificateDaoImpl implements GiftCertificateDAO {
 
     private static final String SQL_GET_CERTIFICATE_BY_ID =
@@ -101,39 +99,39 @@ public class GiftCertificateDaoImpl implements GiftCertificateDAO {
     }
 
     @Override
-    public GiftCertificate getGiftCertificate(String name) {
+    public GiftCertificate get(String name) {
         return jdbcTemplate.queryForObject(SQL_GET_CERTIFICATE_BY_NAME, mapper, name);
     }
 
     @Override
-    public GiftCertificate getGiftCertificate(int id) {
+    public GiftCertificate get(int id) {
         return jdbcTemplate.queryForObject(SQL_GET_CERTIFICATE_BY_ID, mapper, id);
     }
 
     @Override
-    public List<GiftCertificate> getAllGiftCertificates() {
+    public List<GiftCertificate> getAll() {
         return jdbcTemplate.query(SQL_GET_ALL_CERTIFICATES, extractor);
     }
 
     @Override
-    public List<GiftCertificate> getAllGiftCertificates(String content) {
+    public List<GiftCertificate> getAll(String content) {
         String param = "%" + content + "%";
         return jdbcTemplate.query(
                 SQL_GET_ALL_CERTIFICATES_BY_CONTENT, extractor, param, param);
     }
 
     @Override
-    public List<GiftCertificate> getGiftCertificateByTagName(String tagName) {
+    public List<GiftCertificate> getByTagName(String tagName) {
         return jdbcTemplate.query(SQL_GET_CERTIFICATES_BY_TAG_NAME, extractor, tagName);
     }
 
     @Override
-    public List<GiftCertificate> getAllGiftCertificatesSortedByName(boolean isAscending) {
+    public List<GiftCertificate> getAllSortedByName(boolean isAscending) {
         return getAllGiftCertificatesSortedByParameter("gift_certificates.name", isAscending);
     }
 
     @Override
-    public List<GiftCertificate> getAllGiftCertificatesSortedByDate(boolean isAscending) {
+    public List<GiftCertificate> getAllSortedByDate(boolean isAscending) {
         return getAllGiftCertificatesSortedByParameter("create_date", isAscending);
     }
 
@@ -146,7 +144,7 @@ public class GiftCertificateDaoImpl implements GiftCertificateDAO {
     }
 
     @Override
-    public int addGiftCertificate(GiftCertificate giftCertificate) throws PersistenceException {
+    public int create(GiftCertificate giftCertificate) throws PersistenceException {
         KeyHolder holder = new GeneratedKeyHolder();
         jdbcTemplate.update(connection -> {
             PreparedStatement ps = connection.prepareStatement(SQL_ADD_CERTIFICATE, Statement.RETURN_GENERATED_KEYS);
@@ -174,12 +172,12 @@ public class GiftCertificateDaoImpl implements GiftCertificateDAO {
     }
 
     @Override
-    public boolean deleteGiftCertificate(int id) {
+    public boolean delete(int id) {
         return jdbcTemplate.update(SQL_DELETE_CERTIFICATE, id) == 1;
     }
 
     @Override
-    public boolean updateGiftCertificate(GiftCertificate giftCertificate) {
+    public boolean update(GiftCertificate giftCertificate) {
         return jdbcTemplate.update(SQL_UPDATE_CERTIFICATE, getParams(giftCertificate)) == 1;
     }
 
