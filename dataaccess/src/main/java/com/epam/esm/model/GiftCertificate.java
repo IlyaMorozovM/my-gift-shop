@@ -3,7 +3,7 @@ package com.epam.esm.model;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.math.BigDecimal;
-import java.time.ZonedDateTime;
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -17,11 +17,11 @@ public class GiftCertificate {
     private int duration;
     private Set<Tag> tags = new HashSet<>();
 
-    @JsonFormat(pattern = "dd-MM-yy HH:mm")
-    private ZonedDateTime createDate;
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
+    private LocalDateTime createDate;
 
-    @JsonFormat(pattern = "dd-MM-yy HH:mm")
-    private ZonedDateTime lastUpdateDate;
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
+    private LocalDateTime lastUpdateDate;
 
     public int getId() {
         return id;
@@ -55,19 +55,19 @@ public class GiftCertificate {
         this.price = price;
     }
 
-    public ZonedDateTime getCreateDate() {
+    public LocalDateTime getCreateDate() {
         return createDate;
     }
 
-    public void setCreateDate(ZonedDateTime createDate) {
+    public void setCreateDate(LocalDateTime createDate) {
         this.createDate = createDate;
     }
 
-    public ZonedDateTime getLastUpdateDate() {
+    public LocalDateTime getLastUpdateDate() {
         return lastUpdateDate;
     }
 
-    public void setLastUpdateDate(ZonedDateTime lastUpdateDate) {
+    public void setLastUpdateDate(LocalDateTime lastUpdateDate) {
         this.lastUpdateDate = lastUpdateDate;
     }
 

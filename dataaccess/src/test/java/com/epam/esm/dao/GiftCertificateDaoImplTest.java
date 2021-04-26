@@ -21,6 +21,7 @@ import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 import javax.sql.DataSource;
 import java.math.BigDecimal;
 import java.time.Instant;
+import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
@@ -76,7 +77,7 @@ class GiftCertificateDaoImplTest {
         certificate.setDescription("Certificate description");
         certificate.setPrice(new BigDecimal("99.99"));
 
-        certificate.setCreateDate(ZonedDateTime.ofInstant(Instant.now(), ZoneOffset.UTC));
+        certificate.setCreateDate(LocalDateTime.ofInstant(Instant.now(), ZoneOffset.UTC));
         certificate.setLastUpdateDate(certificate.getCreateDate());
         certificate.setDuration(10);
 
@@ -114,7 +115,7 @@ class GiftCertificateDaoImplTest {
         assertTrue(equalDates(actual.getLastUpdateDate(), expected.getLastUpdateDate()));
     }
 
-    private boolean equalDates(ZonedDateTime first, ZonedDateTime second) {
+    private boolean equalDates(LocalDateTime first, LocalDateTime second) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss");
         String firstDate = ZonedDateTime.ofInstant(first.toInstant(), ZoneOffset.UTC).format(formatter);
         String secondDate = ZonedDateTime.ofInstant(second.toInstant(), ZoneOffset.of("+03:00")).format(formatter);

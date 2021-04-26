@@ -3,6 +3,7 @@ package com.epam.esm.dao.impl;
 import com.epam.esm.dao.GiftCertificateDAO;
 import com.epam.esm.dao.exception.ErrorCodeEnum;
 import com.epam.esm.dao.exception.PersistenceException;
+import com.epam.esm.dao.util.DateTimeUtil;
 import com.epam.esm.model.GiftCertificate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -15,12 +16,14 @@ import java.math.BigDecimal;
 import java.sql.PreparedStatement;
 import java.sql.Statement;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.ZoneOffset;
-import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 public class GiftCertificateDaoImpl implements GiftCertificateDAO {
+
+    private static final ZoneId DEFAULT_ZONE = ZoneOffset.UTC;
 
     private static final String SQL_GET_CERTIFICATE_BY_ID =
             "SELECT * FROM gift_certificates " +
@@ -151,14 +154,10 @@ public class GiftCertificateDaoImpl implements GiftCertificateDAO {
             ps.setString(1, giftCertificate.getName());
             ps.setString(2, giftCertificate.getDescription());
             ps.setBigDecimal(3, giftCertificate.getPrice());
-            ps.setTimestamp(4,
-                    Timestamp.valueOf(DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss")
-                            .format(ZonedDateTime.ofInstant(
-                                    giftCertificate.getLastUpdateDate().toInstant(), ZoneOffset.UTC))));
-            ps.setTimestamp(5,
-                    Timestamp.valueOf(DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss")
-                            .format(ZonedDateTime.ofInstant(
-                                    giftCertificate.getLastUpdateDate().toInstant(), ZoneOffset.UTC))));
+            LocalDateTime createdDate = DateTimeUtil
+                    .toZone(LocalDateTime.now(), DEFAULT_ZONE, ZoneId.systemDefault());
+            ps.setTimestamp(4, Timestamp.valueOf(createdDate));
+            ps.setTimestamp(5, Timestamp.valueOf(createdDate));
             ps.setInt(6, giftCertificate.getDuration());
             return ps;
         }, holder);
@@ -191,9 +190,9 @@ public class GiftCertificateDaoImpl implements GiftCertificateDAO {
             params[2] = giftCertificate.getPrice();
         }
 
-        params[3] = DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss")
-                .format(ZonedDateTime.ofInstant(
-                        giftCertificate.getLastUpdateDate().toInstant(), ZoneOffset.UTC));
+        LocalDateTime updatedDate = DateTimeUtil
+                .toZone(LocalDateTime.now(), DEFAULT_ZONE, ZoneId.systemDefault());
+        params[3] = Timestamp.valueOf(updatedDate);
 
         if (giftCertificate.getDuration() != 0) {
             params[4] = giftCertificate.getDuration();

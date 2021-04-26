@@ -6,8 +6,8 @@ import com.epam.esm.model.Tag;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.time.ZoneOffset;
-import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -67,13 +67,13 @@ public class GiftCertificateExtractorUtil {
         giftCertificate.setDescription(rs.getString(CERTIFICATE_DESCRIPTION_COLUMN));
         giftCertificate.setPrice(rs.getBigDecimal(CERTIFICATE_PRICE_COLUMN));
         giftCertificate.setCreateDate(
-                ZonedDateTime.ofInstant(
+                LocalDateTime.ofInstant(
                         ((Timestamp) rs.getObject(CERTIFICATE_CREATE_DATE_COLUMN)).toInstant(),
                         ZoneOffset.UTC
                 )
         );
         giftCertificate.setLastUpdateDate(
-                ZonedDateTime.ofInstant(
+                LocalDateTime.ofInstant(
                         ((Timestamp) rs.getObject(CERTIFICATE_LAST_UPDATE_DATE_COLUMN)).toInstant(),
                         ZoneOffset.UTC
                 )

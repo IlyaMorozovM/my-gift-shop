@@ -19,8 +19,8 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
+import java.time.LocalDateTime;
 import java.time.ZoneOffset;
-import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -165,7 +165,7 @@ public class GiftCertificateServiceImpl implements GiftCertificateService {
     public GiftCertificate create(GiftCertificate giftCertificate) throws ServiceException {
         certificateValidator.validateCertificate(giftCertificate);
         try {
-            giftCertificate.setCreateDate(ZonedDateTime.ofInstant(Instant.now(), ZoneOffset.UTC));
+            giftCertificate.setCreateDate(LocalDateTime.ofInstant(Instant.now(), ZoneOffset.UTC));
             giftCertificate.setLastUpdateDate(giftCertificate.getCreateDate());
 
             int id = giftCertificateDAO.create(giftCertificate);
@@ -207,7 +207,7 @@ public class GiftCertificateServiceImpl implements GiftCertificateService {
         giftCertificate.setId(id);
         certificateValidator.validateCertificate(giftCertificate);
         try {
-            giftCertificate.setLastUpdateDate(ZonedDateTime.ofInstant(Instant.now(), ZoneOffset.UTC));
+            giftCertificate.setLastUpdateDate(LocalDateTime.ofInstant(Instant.now(), ZoneOffset.UTC));
 
             addNewTagsToCertificate(giftCertificate);
 
