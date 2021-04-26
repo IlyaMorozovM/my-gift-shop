@@ -21,6 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -224,9 +225,15 @@ public class GiftCertificateServiceImpl implements GiftCertificateService {
 
     public void addNewTagsToCertificate(GiftCertificate giftCertificate) throws PersistenceException {
         List<Tag> tagsInDataSource = tagDao.getAll();
+        List<String> tagNamesInDataSource = new ArrayList<>();
+        for (Tag tag: tagsInDataSource){
+            tagNamesInDataSource.add(tag.getName());
+        }
         for (Tag tag : giftCertificate.getTags()) {
-            if (!tagsInDataSource.contains(tag)) {
+            if (!tagNamesInDataSource.contains(tag.getName())) {
                 tag.setId(tagDao.create(tag));
+            } else {
+                tag.setId(tagDao.get(tag.getName()).getId());
             }
 
             try {

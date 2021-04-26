@@ -130,15 +130,15 @@ public class GiftCertificateDaoImpl implements GiftCertificateDAO {
 
     @Override
     public List<GiftCertificate> getAllSortedByName(boolean isAscending) {
-        return getAllGiftCertificatesSortedByParameter("gift_certificates.name", isAscending);
+        return getAllSortedByParameter("gift_certificates.name", isAscending);
     }
 
     @Override
     public List<GiftCertificate> getAllSortedByDate(boolean isAscending) {
-        return getAllGiftCertificatesSortedByParameter("create_date", isAscending);
+        return getAllSortedByParameter("create_date", isAscending);
     }
 
-    private List<GiftCertificate> getAllGiftCertificatesSortedByParameter(
+    private List<GiftCertificate> getAllSortedByParameter(
             String parameter, boolean isAscending) {
         String sql = SQL_GET_ALL_CERTIFICATES + "ORDER BY " + parameter + " ";
         sql += isAscending ? "ASC" : "DESC";
