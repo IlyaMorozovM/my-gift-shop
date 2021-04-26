@@ -13,7 +13,7 @@ public class ExceptionHandlerController {
 
     @ExceptionHandler(ServiceException.class)
     public ResponseEntity<ServiceException> handleServiceException(ServiceException exception) {
-        return new ResponseEntity<>(exception, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(exception, HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(HttpMessageNotReadableException.class)

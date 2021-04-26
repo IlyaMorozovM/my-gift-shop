@@ -1,5 +1,7 @@
 package com.epam.esm.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.math.BigDecimal;
 import java.time.ZonedDateTime;
 import java.util.HashSet;
@@ -12,10 +14,14 @@ public class GiftCertificate {
     private String name;
     private String description;
     private BigDecimal price;
-    private ZonedDateTime createDate;
-    private ZonedDateTime lastUpdateDate;
     private int duration;
     private Set<Tag> tags = new HashSet<>();
+
+    @JsonFormat(pattern = "dd-MM-yy HH:mm")
+    private ZonedDateTime createDate;
+
+    @JsonFormat(pattern = "dd-MM-yy HH:mm")
+    private ZonedDateTime lastUpdateDate;
 
     public int getId() {
         return id;
