@@ -10,26 +10,22 @@ import com.epam.esm.model.GiftCertificate;
 import com.epam.esm.model.Tag;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 
 import javax.sql.DataSource;
 import java.math.BigDecimal;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
-import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.Collections;
+import java.util.*;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
 class GiftCertificateDaoImplTest {
@@ -116,9 +112,9 @@ class GiftCertificateDaoImplTest {
     }
 
     private boolean equalDates(LocalDateTime first, LocalDateTime second) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss");
-        String firstDate = ZonedDateTime.ofInstant(first.toInstant(), ZoneOffset.UTC).format(formatter);
-        String secondDate = ZonedDateTime.ofInstant(second.toInstant(), ZoneOffset.of("+03:00")).format(formatter);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
+        String firstDate = formatter.format(first);
+        String secondDate = formatter.format(first);
 
         return firstDate.equals(secondDate);
     }
