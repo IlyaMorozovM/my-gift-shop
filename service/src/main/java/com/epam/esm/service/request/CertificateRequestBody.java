@@ -2,7 +2,7 @@ package com.epam.esm.service.request;
 
 public class CertificateRequestBody {
 
-    private String content;
+    private String searchingPart;
     private SortType sortType;
     private SortParameter sortBy;
     private String tagName;
@@ -10,19 +10,19 @@ public class CertificateRequestBody {
     public CertificateRequestBody() {
     }
 
-    public CertificateRequestBody(String content, SortType sortType, SortParameter sortBy, String tagName) {
-        this.content = content;
+    public CertificateRequestBody(String searchingPart, SortType sortType, SortParameter sortBy, String tagName) {
+        this.searchingPart = searchingPart;
         this.sortType = sortType;
         this.sortBy = sortBy;
         this.tagName = tagName;
     }
 
-    public String getContent() {
-        return content;
+    public String getSearchingPart() {
+        return searchingPart;
     }
 
-    public void setContent(String content) {
-        this.content = content;
+    public void setSearchingPart(String searchingPart) {
+        this.searchingPart = searchingPart;
     }
 
     public SortType getSortType() {

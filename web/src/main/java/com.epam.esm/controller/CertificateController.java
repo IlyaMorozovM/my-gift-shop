@@ -5,9 +5,13 @@ import com.epam.esm.model.GiftCertificate;
 import com.epam.esm.service.GiftCertificateService;
 import com.epam.esm.service.exception.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -33,14 +37,19 @@ public class CertificateController {
     }
 
     @PostMapping
-    public GiftCertificate addGiftCertificate(@RequestBody GiftCertificate giftCertificate) throws ServiceException {
-        return giftCertificateService.create(giftCertificate);
+    public ResponseEntity<Object> addGiftCertificate(@RequestBody GiftCertificate giftCertificate, HttpServletRequest request) throws ServiceException {
+        GiftCertificate cert = giftCertificateService.create(giftCertificate);
+        int id = cert.getId();
+        HttpHeaders headers = new HttpHeaders();
+        String requestUrl = request.getRequestURL().toString();
+        headers.setLocation(URI.create(requestUrl + "/" + id));
+        return new ResponseEntity<>(cert, headers, HttpStatus.CREATED);
     }
 
     @DeleteMapping("/{id}")
     public HttpStatus deleteGiftCertificate( @PathVariable int id) throws ServiceException {
         giftCertificateService.delete(id);
-        return HttpStatus.OK;
+        return HttpStatus.NO_CONTENT;
     }
 
     @PutMapping("/{id}")

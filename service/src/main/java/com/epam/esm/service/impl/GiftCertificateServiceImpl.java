@@ -59,7 +59,7 @@ public class GiftCertificateServiceImpl implements GiftCertificateService {
             return giftCertificateDAO.get(id);
         } catch (DataAccessException e) {
             LOGGER.error("Following exception was thrown in getGiftCertificate(int id): " + e.getMessage());
-            throw new ServiceException("Failed to get certificate by it id: " + id,
+            throw new ServiceException("Failed to get certificate by id: " + id,
                     ErrorCodeEnum.FAILED_TO_RETRIEVE_CERTIFICATE);
         }
     }
@@ -134,8 +134,8 @@ public class GiftCertificateServiceImpl implements GiftCertificateService {
 
     private List<GiftCertificate> getGiftCertificatesByRequestBody(CertificateRequestBody requestBody)
             throws ServiceException {
-        if (requestBody.getContent() != null) {
-            return getByContent(requestBody.getContent());
+        if (requestBody.getSearchingPart() != null) {
+            return getByContent(requestBody.getSearchingPart());
         }
         if (requestBody.getSortType() != null && requestBody.getSortBy() != null) {
             return getSortedCertificates(requestBody.getSortType(), requestBody.getSortBy());

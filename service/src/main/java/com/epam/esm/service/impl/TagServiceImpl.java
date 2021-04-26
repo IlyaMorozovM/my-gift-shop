@@ -46,7 +46,7 @@ public class TagServiceImpl implements TagService {
             return tagDao.get(id);
         } catch (DataAccessException e) {
             LOGGER.error("Following exception was thrown in getTag(int id): " + e.getMessage());
-            throw new ServiceException("Failed to get tag by it id: " + id,
+            throw new ServiceException("Failed to get tag by id: " + id,
                     ErrorCodeEnum.FAILED_TO_RETRIEVE_TAG);
         }
     }
@@ -83,12 +83,12 @@ public class TagServiceImpl implements TagService {
         try {
             if (!tagDao.delete(tagId)) {
                 LOGGER.error("Failed to delete tag");
-                throw new ServiceException("Failed to delete tag because it id (" + tagId + ") is not found",
+                throw new ServiceException("Failed to delete tag because tag with id = " + tagId + " is not found",
                         ErrorCodeEnum.FAILED_TO_DELETE_TAG);
             }
         } catch (DataAccessException e) {
             LOGGER.error("Following exception was thrown in deleteTag(): " + e.getMessage());
-            throw new ServiceException("Failed to delete tag by it id: " + tagId,
+            throw new ServiceException("Failed to delete tag by id: " + tagId,
                     ErrorCodeEnum.FAILED_TO_DELETE_TAG);
         }
     }
