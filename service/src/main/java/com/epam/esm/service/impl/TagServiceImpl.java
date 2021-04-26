@@ -28,7 +28,7 @@ public class TagServiceImpl implements TagService {
     }
 
     @Override
-    public Tag getTag(String name) throws ServiceException {
+    public Tag get(String name) throws ServiceException {
         tagValidator.validateName(name);
         try {
             return tagDao.get(name);
@@ -40,7 +40,7 @@ public class TagServiceImpl implements TagService {
     }
 
     @Override
-    public Tag getTag(int id) throws ServiceException {
+    public Tag get(int id) throws ServiceException {
         tagValidator.validateId(id);
         try {
             return tagDao.get(id);
@@ -52,7 +52,7 @@ public class TagServiceImpl implements TagService {
     }
 
     @Override
-    public List<Tag> getAllTags() throws ServiceException {
+    public List<Tag> get() throws ServiceException {
         try {
             return tagDao.getAll();
         } catch (DataAccessException e) {
@@ -62,7 +62,7 @@ public class TagServiceImpl implements TagService {
     }
 
     @Override
-    public Tag addTag(Tag tag) throws ServiceException {
+    public Tag create(Tag tag) throws ServiceException {
         tagValidator.validateTag(tag);
         try {
             int id = tagDao.create(tag);
@@ -78,7 +78,7 @@ public class TagServiceImpl implements TagService {
     }
 
     @Override
-    public void deleteTag(int tagId) throws ServiceException {
+    public void delete(int tagId) throws ServiceException {
         tagValidator.validateId(tagId);
         try {
             if (!tagDao.delete(tagId)) {

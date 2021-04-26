@@ -32,7 +32,7 @@ class TagServiceImplTest {
 
         Mockito.when(tagDao.get(given.getId())).thenReturn(given);
 
-        Tag actual = tagService.getTag(given.getId());
+        Tag actual = tagService.get(given.getId());
         assertEquals(given, actual);
         Mockito.verify(tagDao).get(given.getId());
     }
@@ -43,7 +43,7 @@ class TagServiceImplTest {
 
         Mockito.when(tagDao.get(given.getName())).thenReturn(given);
 
-        Tag actual = tagService.getTag(given.getName());
+        Tag actual = tagService.get(given.getName());
         assertEquals(given, actual);
         Mockito.verify(tagDao).get(given.getName());
     }
@@ -58,7 +58,7 @@ class TagServiceImplTest {
 
         Mockito.when(tagDao.getAll()).thenReturn(expected);
 
-        List<Tag> actual = tagService.getAllTags();
+        List<Tag> actual = tagService.get();
         assertEquals(expected, actual);
         Mockito.verify(tagDao).getAll();
     }
@@ -68,7 +68,7 @@ class TagServiceImplTest {
         Tag tag = new Tag();
 
         try {
-            tagService.addTag(tag);
+            tagService.create(tag);
         } catch (ServiceException e) {
             assertEquals("Failed to validate: tag name is empty", e.getMessage());
         }
@@ -79,7 +79,7 @@ class TagServiceImplTest {
         Tag tag = new Tag(1, "spa");
 
         try {
-            tagService.deleteTag(tag.getId());
+            tagService.delete(tag.getId());
         } catch (ServiceException e) {
             assertEquals("Failed to delete tag because it id ("
                     + tag.getId() +") is not found", e.getMessage());

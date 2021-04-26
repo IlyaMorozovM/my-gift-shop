@@ -1,14 +1,16 @@
-create table giftcertificates
+create table gift_certificates
 (
-    ID             int auto_increment,
-    Name           varchar(45) not null,
-    Description    varchar(45) not null,
-    Price          double      not null,
-    CreateDate     datetime    not null,
-    LastUpdateDate datetime    not null,
-    Duration       int         not null,
+    id               int auto_increment,
+    name             varchar(45) not null,
+    description      varchar(45) not null,
+    price            double      not null,
+    create_date      datetime    not null,
+    last_update_date datetime    not null,
+    duration         int         not null,
     constraint id_UNIQUE
-        unique (ID)
+        unique (id),
+    constraint name_UNIQUE
+        unique (name)
 );
 
 alter table gift_certificates
@@ -16,26 +18,26 @@ alter table gift_certificates
 
 create table tags
 (
-    ID   int auto_increment,
-    Name varchar(45) not null,
+    id   int auto_increment,
+    name varchar(45) not null,
     constraint Id_UNIQUE
-        unique (ID),
+        unique (id),
     constraint Name_UNIQUE
-        unique (Name)
+        unique (name)
 );
 
 alter table tags
     add primary key (id);
 
-create table certificatedetails
+create table certificate_details
 (
-    TagID         int not null,
-    CertificateID int not null,
-    primary key (TagID, CertificateID),
+    tag_id         int not null,
+    certificate_id int not null,
+    primary key (tag_id, certificate_id),
     constraint FK_Certificate_Id
-        foreign key (CertificateID) references gift_certificates (id),
+        foreign key (certificate_id) references gift_certificates (id),
     constraint FK_Tag_Id
-        foreign key (TagID) references tags (id)
+        foreign key (tag_id) references tags (id)
 );
 
 create index FK_Certificate_Id_idx

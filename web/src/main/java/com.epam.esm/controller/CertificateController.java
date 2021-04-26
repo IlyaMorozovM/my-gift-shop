@@ -24,28 +24,28 @@ public class CertificateController {
     @GetMapping
     public List<GiftCertificate> getGiftCertificates(
             @RequestBody(required = false) CertificateRequestBody request) throws ServiceException {
-           return giftCertificateService.getGiftCertificates(request);
+           return giftCertificateService.get(request);
     }
 
     @GetMapping("/{id}")
     public GiftCertificate getGiftCertificate(@PathVariable int id) throws ServiceException {
-        return giftCertificateService.getGiftCertificate(id);
+        return giftCertificateService.get(id);
     }
 
     @PostMapping
     public GiftCertificate addGiftCertificate(@RequestBody GiftCertificate giftCertificate) throws ServiceException {
-        return giftCertificateService.addGiftCertificate(giftCertificate);
+        return giftCertificateService.create(giftCertificate);
     }
 
     @DeleteMapping("/{id}")
     public HttpStatus deleteGiftCertificate( @PathVariable int id) throws ServiceException {
-        giftCertificateService.deleteGiftCertificate(id);
+        giftCertificateService.delete(id);
         return HttpStatus.OK;
     }
 
     @PutMapping("/{id}")
     public GiftCertificate updateGiftCertificate(
             @RequestBody GiftCertificate giftCertificate, @PathVariable int id) throws ServiceException {
-        return giftCertificateService.updateGiftCertificate(giftCertificate, id);
+        return giftCertificateService.update(giftCertificate, id);
     }
 }

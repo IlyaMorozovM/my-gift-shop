@@ -23,7 +23,7 @@ public interface TagService {
      * @throws ServiceException when failed to get Tag from persistence layer.
      * @return Tag.
      */
-    Tag getTag(String name) throws ServiceException;
+    Tag get(String name) throws ServiceException;
 
     /**
      * Retrieves data of Tag from
@@ -34,7 +34,7 @@ public interface TagService {
      * @throws ServiceException when failed to get Tag from persistence layer.
      * @return Tag.
      */
-    Tag getTag(int id) throws ServiceException;
+    Tag get(int id) throws ServiceException;
 
     /**
      * Retrieves all Tag from persistence layer.
@@ -42,7 +42,7 @@ public interface TagService {
      * @throws ServiceException when failed to get Tag from persistence layer.
      * @return List<Tag> - all existing tags in persistence layer.
      */
-    List<Tag> getAllTags() throws ServiceException;
+    List<Tag> get() throws ServiceException;
 
     /**
      * Adds new Tag to persistence layer.
@@ -51,7 +51,7 @@ public interface TagService {
      * @throws ServiceException when failed to add Tag to persistence layer.
      * @return id of a Tag from persistence layer.
      */
-    Tag addTag(Tag tag) throws ServiceException;
+    Tag create(Tag tag) throws ServiceException;
 
     /**
      * Deletes Tag from persistence layer.
@@ -59,5 +59,5 @@ public interface TagService {
      * @param tagId id of a Tag which to delete from persistence layer.
      * @throws ServiceException when failed to delete Tag from persistence layer.
      */
-    void deleteTag(int tagId) throws ServiceException;
+    void delete(int tagId) throws ServiceException;
 }

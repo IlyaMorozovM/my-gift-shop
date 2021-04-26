@@ -75,7 +75,7 @@ class GiftCertificateServiceImplTest {
 
         Mockito.when(giftCertificateDAO.get(given.getId())).thenReturn(given);
 
-        GiftCertificate actual = giftCertificateService.getGiftCertificate(given.getId());
+        GiftCertificate actual = giftCertificateService.get(given.getId());
         assertEquals(given, actual);
         Mockito.verify(giftCertificateDAO).get(given.getId());
     }
@@ -88,7 +88,7 @@ class GiftCertificateServiceImplTest {
 
         Mockito.when(giftCertificateDAO.get(given.getName())).thenReturn(given);
 
-        GiftCertificate actual = giftCertificateService.getGiftCertificate(given.getName());
+        GiftCertificate actual = giftCertificateService.get(given.getName());
         assertEquals(given, actual);
         Mockito.verify(giftCertificateDAO).get(given.getName());
     }
@@ -103,9 +103,9 @@ class GiftCertificateServiceImplTest {
             given.add(certificate);
         }
 
-        Mockito.when(giftCertificateService.geAllCertificates()).thenReturn(given);
+        Mockito.when(giftCertificateService.getAll()).thenReturn(given);
 
-        List<GiftCertificate> actual = giftCertificateService.geAllCertificates();
+        List<GiftCertificate> actual = giftCertificateService.getAll();
         assertEquals(given, actual);
         Mockito.verify(giftCertificateDAO).getAll();
     }
@@ -121,7 +121,7 @@ class GiftCertificateServiceImplTest {
                 givenCertificate.getId(), givenTag.getId())).thenReturn(true);
         Mockito.when(giftCertificateDAO.create(givenCertificate)).thenReturn(expectedId);
 
-        givenCertificate = giftCertificateService.addGiftCertificate(givenCertificate);
+        givenCertificate = giftCertificateService.create(givenCertificate);
         assertEquals(expectedId, givenCertificate.getId());
         Mockito.verify(tagDao).create(givenTag);
         Mockito.verify(giftCertificateDAO)
@@ -134,7 +134,7 @@ class GiftCertificateServiceImplTest {
         GiftCertificate giftCertificate = new GiftCertificate();
 
         try {
-            giftCertificateService.addGiftCertificate(giftCertificate);
+            giftCertificateService.create(giftCertificate);
         } catch (ServiceException e) {
             assertEquals("Failed to validate: certificate name is empty", e.getMessage());
         }
@@ -161,7 +161,7 @@ class GiftCertificateServiceImplTest {
         Mockito.when(giftCertificateDAO.getAllSortedByDate(true))
                 .thenReturn(givenCertificates);
 
-        List<GiftCertificate> actual = giftCertificateService.getGiftCertificates(givenRequestBody);
+        List<GiftCertificate> actual = giftCertificateService.get(givenRequestBody);
         assertEquals(givenCertificates, actual);
         Mockito.verify(giftCertificateDAO).getAllSortedByDate(true);
     }
@@ -177,7 +177,7 @@ class GiftCertificateServiceImplTest {
         Mockito.when(giftCertificateDAO.getAllSortedByDate(false))
                 .thenReturn(givenCertificates);
 
-        List<GiftCertificate> actual = giftCertificateService.getGiftCertificates(givenRequestBody);
+        List<GiftCertificate> actual = giftCertificateService.get(givenRequestBody);
         assertEquals(givenCertificates, actual);
         Mockito.verify(giftCertificateDAO).getAllSortedByDate(false);
     }

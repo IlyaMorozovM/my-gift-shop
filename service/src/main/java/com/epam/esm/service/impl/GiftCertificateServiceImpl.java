@@ -41,7 +41,7 @@ public class GiftCertificateServiceImpl implements GiftCertificateService {
     }
 
     @Override
-    public GiftCertificate getGiftCertificate(String name) throws ServiceException {
+    public GiftCertificate get(String name) throws ServiceException {
         certificateValidator.validateName(name);
         try {
             return giftCertificateDAO.get(name);
@@ -53,7 +53,7 @@ public class GiftCertificateServiceImpl implements GiftCertificateService {
     }
 
     @Override
-    public GiftCertificate getGiftCertificate(int id) throws ServiceException {
+    public GiftCertificate get(int id) throws ServiceException {
         certificateValidator.validateId(id);
         try {
             return giftCertificateDAO.get(id);
@@ -65,7 +65,7 @@ public class GiftCertificateServiceImpl implements GiftCertificateService {
     }
 
     @Override
-    public List<GiftCertificate> geAllCertificates() throws ServiceException {
+    public List<GiftCertificate> getAll() throws ServiceException {
         try {
             return giftCertificateDAO.getAll();
         } catch (DataAccessException e) {
@@ -75,7 +75,7 @@ public class GiftCertificateServiceImpl implements GiftCertificateService {
     }
 
     @Override
-    public List<GiftCertificate> getGiftCertificatesByContent(String content) throws ServiceException {
+    public List<GiftCertificate> getByContent(String content) throws ServiceException {
         if (content == null || content.isEmpty()) {
             throw new ServiceException("Failed to validate: content is empty", ErrorCodeEnum.INVALID_INPUT);
         }
@@ -90,7 +90,7 @@ public class GiftCertificateServiceImpl implements GiftCertificateService {
     }
 
     @Override
-    public List<GiftCertificate> getGiftCertificateByTagName(String tagName) throws ServiceException {
+    public List<GiftCertificate> getByTagName(String tagName) throws ServiceException {
         certificateValidator.validateName(tagName);
         try {
             return giftCertificateDAO.getByTagName(tagName);
@@ -102,7 +102,7 @@ public class GiftCertificateServiceImpl implements GiftCertificateService {
     }
 
     @Override
-    public List<GiftCertificate> getAllGiftCertificatesSortedByName(boolean isAscending)
+    public List<GiftCertificate> getAllSortedByName(boolean isAscending)
             throws ServiceException {
         try {
             return giftCertificateDAO.getAllSortedByName(isAscending);
@@ -113,7 +113,7 @@ public class GiftCertificateServiceImpl implements GiftCertificateService {
     }
 
     @Override
-    public List<GiftCertificate> getAllGiftCertificatesSortedByDate(boolean isAscending)
+    public List<GiftCertificate> getAllSortedByDate(boolean isAscending)
             throws ServiceException {
         try {
             return giftCertificateDAO.getAllSortedByDate(isAscending);
@@ -124,9 +124,9 @@ public class GiftCertificateServiceImpl implements GiftCertificateService {
     }
 
     @Override
-    public List<GiftCertificate> getGiftCertificates(CertificateRequestBody requestBody) throws ServiceException {
+    public List<GiftCertificate> get(CertificateRequestBody requestBody) throws ServiceException {
         if (requestBody == null) {
-            return geAllCertificates();
+            return getAll();
         } else {
             return getGiftCertificatesByRequestBody(requestBody);
         }
@@ -135,13 +135,13 @@ public class GiftCertificateServiceImpl implements GiftCertificateService {
     private List<GiftCertificate> getGiftCertificatesByRequestBody(CertificateRequestBody requestBody)
             throws ServiceException {
         if (requestBody.getContent() != null) {
-            return getGiftCertificatesByContent(requestBody.getContent());
+            return getByContent(requestBody.getContent());
         }
         if (requestBody.getSortType() != null && requestBody.getSortBy() != null) {
             return getSortedCertificates(requestBody.getSortType(), requestBody.getSortBy());
         }
         if (requestBody.getTagName() != null) {
-            return getGiftCertificateByTagName(requestBody.getTagName());
+            return getByTagName(requestBody.getTagName());
         }
 
         throw new ServiceException("Error: request input body is empty", ErrorCodeEnum.INVALID_SORT_INPUT);
@@ -150,8 +150,8 @@ public class GiftCertificateServiceImpl implements GiftCertificateService {
     private List<GiftCertificate> getSortedCertificates(SortType sortType, SortParameter sortBy)
             throws ServiceException {
         switch (sortBy) {
-            case DATE : return getAllGiftCertificatesSortedByDate(isAscending(sortType));
-            case NAME : return getAllGiftCertificatesSortedByName(isAscending(sortType));
+            case DATE : return getAllSortedByDate(isAscending(sortType));
+            case NAME : return getAllSortedByName(isAscending(sortType));
             default: throw new NoSuchElementException("Not found sort criteria");
         }
     }
@@ -162,7 +162,7 @@ public class GiftCertificateServiceImpl implements GiftCertificateService {
 
     @Override
     @Transactional
-    public GiftCertificate addGiftCertificate(GiftCertificate giftCertificate) throws ServiceException {
+    public GiftCertificate create(GiftCertificate giftCertificate) throws ServiceException {
         certificateValidator.validateCertificate(giftCertificate);
         try {
             giftCertificate.setCreateDate(ZonedDateTime.ofInstant(Instant.now(), ZoneOffset.UTC));
@@ -186,8 +186,8 @@ public class GiftCertificateServiceImpl implements GiftCertificateService {
 
     @Override
     @Transactional
-    public void deleteGiftCertificate(int id) throws ServiceException {
-        GiftCertificate giftCertificate = getGiftCertificate(id);
+    public void delete(int id) throws ServiceException {
+        GiftCertificate giftCertificate = get(id);
         try {
             giftCertificateDAO.deleteAllCertificateTagRelations(giftCertificate.getId());
 
@@ -203,7 +203,7 @@ public class GiftCertificateServiceImpl implements GiftCertificateService {
 
     @Override
     @Transactional
-    public GiftCertificate updateGiftCertificate(GiftCertificate giftCertificate, int id) throws ServiceException {
+    public GiftCertificate update(GiftCertificate giftCertificate, int id) throws ServiceException {
         giftCertificate.setId(id);
         certificateValidator.validateCertificate(giftCertificate);
         try {
@@ -215,7 +215,7 @@ public class GiftCertificateServiceImpl implements GiftCertificateService {
                 LOGGER.error("Failed to update certificate");
                 throw new ServiceException("Failed to update certificate", ErrorCodeEnum.FAILED_TO_UPDATE_CERTIFICATE);
             }
-            return getGiftCertificate(id);
+            return get(id);
         } catch (DataAccessException | PersistenceException e) {
             LOGGER.error("Following exception was thrown in updateGiftCertificate(): " + e.getMessage());
             throw new ServiceException("Failed to update certificate", ErrorCodeEnum.FAILED_TO_UPDATE_CERTIFICATE);

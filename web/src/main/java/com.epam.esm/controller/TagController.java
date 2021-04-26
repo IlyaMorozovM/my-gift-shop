@@ -21,22 +21,22 @@ public class TagController {
 
     @GetMapping
     public List<Tag> getTags() throws ServiceException {
-        return tagService.getAllTags();
+        return tagService.get();
     }
 
     @GetMapping("/{id}")
     public Tag getTag(@PathVariable int id) throws ServiceException {
-        return tagService.getTag(id);
+        return tagService.get(id);
     }
 
     @PostMapping
     public Tag addTag(@RequestBody Tag tag) throws ServiceException {
-        return tagService.addTag(tag);
+        return tagService.create(tag);
     }
 
     @DeleteMapping("/{id}")
     public HttpStatus deleteTag(@PathVariable int id) throws ServiceException {
-        tagService.deleteTag(id);
+        tagService.delete(id);
         return HttpStatus.OK;
     }
 }
