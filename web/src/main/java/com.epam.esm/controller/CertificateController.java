@@ -61,7 +61,7 @@ public class CertificateController {
         HttpHeaders headers = new HttpHeaders();
         String requestUrl = request.getRequestURL().toString();
         headers.setLocation(URI.create(requestUrl + "/" + id));
-        return new ResponseEntity<>(certificate, headers, HttpStatus.CREATED);
+        return new ResponseEntity<>(headers, HttpStatus.CREATED);
     }
 
     @DeleteMapping("/{id}")

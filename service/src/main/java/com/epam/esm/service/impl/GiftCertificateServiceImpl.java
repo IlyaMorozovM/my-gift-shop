@@ -166,8 +166,9 @@ public class GiftCertificateServiceImpl implements GiftCertificateService {
     public GiftCertificate create(GiftCertificate giftCertificate) throws ServiceException {
         certificateValidator.validateCertificate(giftCertificate);
         try {
-            giftCertificate.setCreateDate(LocalDateTime.ofInstant(Instant.now(), ZoneOffset.UTC));
-            giftCertificate.setLastUpdateDate(giftCertificate.getCreateDate());
+            LocalDateTime createdDate = LocalDateTime.now();
+            giftCertificate.setCreateDate(createdDate);
+            giftCertificate.setLastUpdateDate(createdDate);
 
             int id = giftCertificateDAO.create(giftCertificate);
             giftCertificate.setId(id);
