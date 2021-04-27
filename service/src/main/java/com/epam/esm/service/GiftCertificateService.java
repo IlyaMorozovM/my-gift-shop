@@ -3,6 +3,8 @@ package com.epam.esm.service;
 import com.epam.esm.model.GiftCertificate;
 import com.epam.esm.service.exception.ServiceException;
 import com.epam.esm.service.request.CertificateRequestBody;
+import com.epam.esm.service.request.SortParameter;
+import com.epam.esm.service.request.SortType;
 
 import java.util.List;
 
@@ -84,6 +86,8 @@ public interface GiftCertificateService {
      * @return List<GiftCertificate> - sorted certificates in persistence layer.
      */
     List<GiftCertificate> getAllSortedByDate(boolean isAscending) throws ServiceException;
+
+    List<GiftCertificate> getSortedCertificates(SortType sortType, SortParameter sortBy) throws ServiceException;
 
     /**
      * Retrieves GiftCertificate from persistence layer

@@ -81,8 +81,8 @@ class TagServiceImplTest {
         try {
             tagService.delete(tag.getId());
         } catch (ServiceException e) {
-            assertEquals("Failed to delete tag because id ("
-                    + tag.getId() +") is not found", e.getMessage());
+            assertEquals("Failed to delete tag because tag with id = "
+                    + tag.getId() +" is not found", e.getMessage());
         }
         Mockito.verify(tagDao).delete(tag.getId());
     }

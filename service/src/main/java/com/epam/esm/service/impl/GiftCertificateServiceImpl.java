@@ -148,7 +148,7 @@ public class GiftCertificateServiceImpl implements GiftCertificateService {
         throw new ServiceException("Error: request input body is empty", ErrorCodeEnum.INVALID_SORT_INPUT);
     }
 
-    private List<GiftCertificate> getSortedCertificates(SortType sortType, SortParameter sortBy)
+    public List<GiftCertificate> getSortedCertificates(SortType sortType, SortParameter sortBy)
             throws ServiceException {
         switch (sortBy) {
             case DATE : return getAllSortedByDate(isAscending(sortType));

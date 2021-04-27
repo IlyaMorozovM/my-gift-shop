@@ -13,6 +13,9 @@ public class ExceptionHandlerController {
 
     @ExceptionHandler(ServiceException.class)
     public ResponseEntity<ServiceException> handleServiceException(ServiceException exception) {
+        if (exception.getMessage().contains("already exists")){
+            return new ResponseEntity<>(exception, HttpStatus.CONFLICT);
+        }
         return new ResponseEntity<>(exception, HttpStatus.NOT_FOUND);
     }
 

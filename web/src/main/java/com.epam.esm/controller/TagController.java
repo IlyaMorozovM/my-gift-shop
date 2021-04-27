@@ -1,11 +1,17 @@
 package com.epam.esm.controller;
 
+import com.epam.esm.model.GiftCertificate;
 import com.epam.esm.model.Tag;
 import com.epam.esm.service.TagService;
 import com.epam.esm.service.exception.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -30,13 +36,19 @@ public class TagController {
     }
 
     @PostMapping
-    public Tag addTag(@RequestBody Tag tag) throws ServiceException {
-        return tagService.create(tag);
+    public ResponseEntity<Object> addTag(@RequestBody Tag requestedTag, HttpServletRequest request) throws ServiceException {
+        Tag createdTag = tagService.create(requestedTag);
+        int id = createdTag.getId();
+        HttpHeaders headers = new HttpHeaders();
+        String requestUrl = request.getRequestURL().toString();
+        headers.setLocation(URI.create(requestUrl + "/" + id));
+        return new ResponseEntity<>(createdTag, headers, HttpStatus.CREATED);
+        //return tagService.create(tag);
     }
 
     @DeleteMapping("/{id}")
     public HttpStatus deleteTag(@PathVariable int id) throws ServiceException {
         tagService.delete(id);
-        return HttpStatus.OK;
+        return HttpStatus.NO_CONTENT;
     }
 }
