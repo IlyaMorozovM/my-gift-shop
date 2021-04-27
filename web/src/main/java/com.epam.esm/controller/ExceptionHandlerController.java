@@ -19,6 +19,13 @@ public class ExceptionHandlerController {
         return new ResponseEntity<>(exception, HttpStatus.NOT_FOUND);
     }
 
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<ServiceException> handleIllegalArgumentException() {
+        ServiceException myException = new ServiceException("Invalid param passed in a request",
+                ErrorCodeEnum.INVALID_INPUT);
+        return new ResponseEntity<>(myException, HttpStatus.BAD_REQUEST);
+    }
+
     @ExceptionHandler(HttpMessageNotReadableException.class)
     public ResponseEntity<ServiceException> handleServiceException() {
         ServiceException exception = new ServiceException("Invalid field type passed in a JSON",

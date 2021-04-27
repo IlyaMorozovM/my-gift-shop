@@ -9,9 +9,9 @@ import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.LinkedHashMap;
 
 
 public class GiftCertificateExtractorUtil {
@@ -31,7 +31,7 @@ public class GiftCertificateExtractorUtil {
     }
 
     public static List<GiftCertificate> extractGiftCertificates(ResultSet rs) throws SQLException {
-        Map<Integer, GiftCertificate> map = new HashMap<>();
+        Map<Integer, GiftCertificate> map = new LinkedHashMap<>();
         while (rs.next()) {
             setCertificateToMap(rs, map);
         }
@@ -40,7 +40,7 @@ public class GiftCertificateExtractorUtil {
     }
 
     public static GiftCertificate extractGiftCertificate(ResultSet rs) throws SQLException {
-        Map<Integer, GiftCertificate> map = new HashMap<>();
+        Map<Integer, GiftCertificate> map = new LinkedHashMap<>();
         do {
             setCertificateToMap(rs, map);
         } while (rs.next());

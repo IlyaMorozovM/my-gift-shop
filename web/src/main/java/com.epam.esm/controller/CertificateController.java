@@ -28,29 +28,21 @@ public class CertificateController {
     }
 
     @GetMapping
-    public List<GiftCertificate> getGiftCertificates(
-            @RequestBody(required = false) CertificateRequestBody request) throws ServiceException {
-           return giftCertificateService.get(request);
+    public List<GiftCertificate> getGiftCertificatesWithSorting(
+            @RequestParam(name = "sortBy", required = false) String sortBy,
+            @RequestParam(name = "sortType", required = false) String sortType) throws ServiceException {
+        if (isSortParamsNotNull(sortBy, sortType)){
+            SortParameter sortParameter = SortParameter.valueOf(sortBy.toUpperCase());
+            SortType requestedSortType = SortType.valueOf(sortType.toUpperCase());
+            List<GiftCertificate> list = giftCertificateService.getSortedCertificates(requestedSortType, sortParameter);
+            return list;
+        }
+        return giftCertificateService.getAll();
     }
 
-//    @GetMapping
-//    public List<GiftCertificate> getGiftCertificatesWithSorting(
-//            @RequestParam(name = "sortBy") String sortBy,
-//            @RequestParam(name = "sortParam") String sortParam) throws ServiceException {
-//        SortType sortType;
-//        SortParameter sortParameter;
-//        if (sortBy.equals("date")){
-//            sortParameter = SortParameter.DATE;
-//        } else {
-//            sortParameter = SortParameter.NAME;
-//        }
-//        if (sortParam.equals("asc")){
-//            sortType = SortType.ASC;
-//        } else {
-//            sortType = SortType.DESC;
-//        }
-//        return giftCertificateService.getSortedCertificates(sortType, sortParameter);
-//    }
+    private boolean isSortParamsNotNull(String sortBy, String sortParam){
+        return sortBy != null && sortParam != null;
+    }
 
     @GetMapping("/{id}")
     public GiftCertificate getGiftCertificate(@PathVariable int id) throws ServiceException {
