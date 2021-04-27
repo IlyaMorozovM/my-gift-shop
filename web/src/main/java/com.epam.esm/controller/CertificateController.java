@@ -30,12 +30,17 @@ public class CertificateController {
     @GetMapping
     public List<GiftCertificate> getGiftCertificatesWithSorting(
             @RequestParam(name = "sortBy", required = false) String sortBy,
-            @RequestParam(name = "sortType", required = false) String sortType) throws ServiceException {
+            @RequestParam(name = "sortType", required = false) String sortType,
+            @RequestParam(name = "tagName", required = false) String tagName,
+            @RequestParam(name = "searchByPart", required = false) String searchByPart) throws ServiceException {
         if (isSortParamsNotNull(sortBy, sortType)){
             SortParameter sortParameter = SortParameter.valueOf(sortBy.toUpperCase());
             SortType requestedSortType = SortType.valueOf(sortType.toUpperCase());
-            List<GiftCertificate> list = giftCertificateService.getSortedCertificates(requestedSortType, sortParameter);
-            return list;
+            return giftCertificateService.getSortedCertificates(requestedSortType, sortParameter);
+        } else if (tagName != null){
+            return giftCertificateService.getByTagName(tagName);
+        } else if (searchByPart != null){
+            return giftCertificateService.getBySearchingPart(searchByPart);
         }
         return giftCertificateService.getAll();
     }

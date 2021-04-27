@@ -117,8 +117,8 @@ public class GiftCertificateDaoImpl implements GiftCertificateDAO {
     }
 
     @Override
-    public List<GiftCertificate> getAll(String content) {
-        String param = "%" + content + "%";
+    public List<GiftCertificate> getAll(String searchingPart) {
+        String param = "%" + searchingPart + "%";
         return jdbcTemplate.query(
                 SQL_GET_ALL_CERTIFICATES_BY_CONTENT, extractor, param, param);
     }

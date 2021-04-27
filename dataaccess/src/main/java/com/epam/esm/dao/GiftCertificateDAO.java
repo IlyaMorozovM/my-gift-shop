@@ -46,10 +46,10 @@ public interface GiftCertificateDAO {
      * by content which this GiftCertificate contains
      * in it name or description.
      *
-     * @param content GiftCertificate name or description.
+     * @param searchingPart GiftCertificate name or description.
      * @return List<GiftCertificate> - existing certificates in data source.
      */
-    List<GiftCertificate> getAll(String content);
+    List<GiftCertificate> getAll(String searchingPart);
 
     /**
      * Retrieves GiftCertificate from data source

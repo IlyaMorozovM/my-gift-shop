@@ -76,16 +76,16 @@ public class GiftCertificateServiceImpl implements GiftCertificateService {
     }
 
     @Override
-    public List<GiftCertificate> getByContent(String content) throws ServiceException {
-        if (content == null || content.isEmpty()) {
+    public List<GiftCertificate> getBySearchingPart(String searchingPart) throws ServiceException {
+        if (searchingPart == null || searchingPart.isEmpty()) {
             throw new ServiceException("Failed to validate: content is empty", ErrorCodeEnum.INVALID_INPUT);
         }
 
         try {
-            return giftCertificateDAO.getAll(content);
+            return giftCertificateDAO.getAll(searchingPart);
         } catch (DataAccessException e) {
             LOGGER.error("Following exception was thrown in getAllGiftCertificates(String content): " + e.getMessage());
-            throw new ServiceException("Failed to get certificate by it content: " + content,
+            throw new ServiceException("Failed to get certificate by it content: " + searchingPart,
                     ErrorCodeEnum.FAILED_TO_RETRIEVE_CERTIFICATE);
         }
     }
@@ -135,8 +135,8 @@ public class GiftCertificateServiceImpl implements GiftCertificateService {
 
     private List<GiftCertificate> getGiftCertificatesByRequestBody(CertificateRequestBody requestBody)
             throws ServiceException {
-        if (requestBody.getSearchingPart() != null) {
-            return getByContent(requestBody.getSearchingPart());
+        if (requestBody.getSearchByPart() != null) {
+            return getBySearchingPart(requestBody.getSearchByPart());
         }
         if (requestBody.getSortType() != null && requestBody.getSortBy() != null) {
             return getSortedCertificates(requestBody.getSortType(), requestBody.getSortBy());
@@ -216,6 +216,9 @@ public class GiftCertificateServiceImpl implements GiftCertificateService {
                 LOGGER.error("Failed to update certificate");
                 throw new ServiceException("Failed to update certificate", ErrorCodeEnum.FAILED_TO_UPDATE_CERTIFICATE);
             }
+
+            giftCertificateDAO.deleteAllCertificateTagRelations(id);
+            addNewTagsToCertificate(giftCertificate);
             return get(id);
         } catch (DataAccessException | PersistenceException e) {
             LOGGER.error("Following exception was thrown in updateGiftCertificate(): " + e.getMessage());

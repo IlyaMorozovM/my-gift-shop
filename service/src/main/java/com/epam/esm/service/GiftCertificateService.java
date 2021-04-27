@@ -48,14 +48,14 @@ public interface GiftCertificateService {
 
     /**
      * Retrieves GiftCertificate from persistence layer
-     * by content which this GiftCertificate contains
+     * by searchingPart which this GiftCertificate contains
      * in it name or description.
      *
-     * @param content GiftCertificate name or description.
+     * @param searchingPart GiftCertificate name or description.
      * @throws ServiceException when failed to get GiftCertificate from persistence layer.
      * @return List<GiftCertificate> - existing certificates in persistence layer.
      */
-    List<GiftCertificate> getByContent(String content) throws ServiceException;
+    List<GiftCertificate> getBySearchingPart(String searchingPart) throws ServiceException;
 
     /**
      * Retrieves GiftCertificate from persistence layer
@@ -87,6 +87,15 @@ public interface GiftCertificateService {
      */
     List<GiftCertificate> getAllSortedByDate(boolean isAscending) throws ServiceException;
 
+    /**
+     * Retrieves all GiftCertificate from persistence layer
+     * and sorts it by sortBy param according to sortType param (ASC or DESC).
+     *
+     * @param sortBy sorting by this parameter (for example by date).
+     * @param sortType asc or desc sort.
+     * @throws ServiceException when failed to get GiftCertificate from persistence layer.
+     * @return List<GiftCertificate> - sorted certificates in persistence layer.
+     */
     List<GiftCertificate> getSortedCertificates(SortType sortType, SortParameter sortBy) throws ServiceException;
 
     /**
