@@ -43,12 +43,11 @@ public class TagController {
         String requestUrl = request.getRequestURL().toString();
         headers.setLocation(URI.create(requestUrl + "/" + id));
         return new ResponseEntity<>(createdTag, headers, HttpStatus.CREATED);
-        //return tagService.create(tag);
     }
 
     @DeleteMapping("/{id}")
-    public HttpStatus deleteTag(@PathVariable int id) throws ServiceException {
+    public ResponseEntity<Object> deleteTag(@PathVariable int id) throws ServiceException {
         tagService.delete(id);
-        return HttpStatus.NO_CONTENT;
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

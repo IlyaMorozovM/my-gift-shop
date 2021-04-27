@@ -68,9 +68,9 @@ public class CertificateController {
     }
 
     @DeleteMapping("/{id}")
-    public HttpStatus deleteGiftCertificate(@PathVariable int id) throws ServiceException {
+    public ResponseEntity<Object> deleteGiftCertificate(@PathVariable int id) throws ServiceException {
         giftCertificateService.delete(id);
-        return HttpStatus.NO_CONTENT;
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @PutMapping("/{id}")
