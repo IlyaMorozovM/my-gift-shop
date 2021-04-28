@@ -190,15 +190,17 @@ public class GiftCertificateServiceImpl implements GiftCertificateService {
     @Transactional
     public void delete(int id) throws ServiceException {
         try {
-            if (!giftCertificateDAO.delete(id)) {
-                LOGGER.error("Failed to delete tag because certificate with id = " + id + " is not found");
-                throw new ServiceException("Failed to delete tag because certificate with id = " + id +  " is not found",
-                        ErrorCodeEnum.FAILED_TO_DELETE_CERTIFICATE);
+            if (giftCertificateDAO.get(id) != null) {
+                giftCertificateDAO.deleteAllCertificateTagRelations(id);
+                if (!giftCertificateDAO.delete(id)) {
+                    LOGGER.error("Failed to delete tag");
+                    throw new ServiceException("Failed to delete tag", ErrorCodeEnum.FAILED_TO_DELETE_CERTIFICATE);
+                }
             }
-            giftCertificateDAO.deleteAllCertificateTagRelations(id);
         } catch (DataAccessException e) {
             LOGGER.error("Following exception was thrown in deleteGiftCertificate(): " + e.getMessage());
-            throw new ServiceException("Failed to delete certificate", ErrorCodeEnum.FAILED_TO_DELETE_CERTIFICATE);
+            throw new ServiceException("Failed to delete tag because certificate with id = " + id + " is not found",
+                    ErrorCodeEnum.FAILED_TO_DELETE_CERTIFICATE);
         }
     }
 
