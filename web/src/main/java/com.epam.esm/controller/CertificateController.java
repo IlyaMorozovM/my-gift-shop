@@ -1,6 +1,5 @@
 package com.epam.esm.controller;
 
-import com.epam.esm.service.request.CertificateRequestBody;
 import com.epam.esm.model.GiftCertificate;
 import com.epam.esm.service.GiftCertificateService;
 import com.epam.esm.service.exception.ServiceException;

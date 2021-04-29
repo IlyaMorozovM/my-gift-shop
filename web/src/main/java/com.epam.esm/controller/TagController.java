@@ -1,6 +1,5 @@
 package com.epam.esm.controller;
 
-import com.epam.esm.model.GiftCertificate;
 import com.epam.esm.model.Tag;
 import com.epam.esm.service.TagService;
 import com.epam.esm.service.exception.ServiceException;
