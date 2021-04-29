@@ -225,22 +225,6 @@ class GiftCertificateDaoImplTest {
     }
 
     @Test
-    void whenAddGiftCertificates_thenCorrectlyReturnThemSortedByDateDesc() throws PersistenceException {
-        List<GiftCertificate> given = initCertificates(10);
-
-        for (GiftCertificate certificate: given) {
-            certificate.setId(giftCertificateDAO.create(certificate));
-
-            for (Tag tag: certificate.getTags()) {
-                giftCertificateDAO.createCertificateTagRelation(certificate.getId(), tag.getId());
-            }
-        }
-
-        List<GiftCertificate> actual = giftCertificateDAO.getAllSortedByDate(false);
-        assertEqualsCertificateLists(given, actual);
-    }
-
-    @Test
     void whenAddGiftCertificates_thenCorrectlyReturnThemSortedByNameAsc() throws PersistenceException {
         List<GiftCertificate> given = initCertificates(10);
 
