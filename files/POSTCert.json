@@ -1,0 +1,13 @@
+{
+    "id": 3,
+    "name": "SPA2",
+    "description": "New cert2",
+    "price": 10.0,
+    "duration": 10,
+    "tags": [
+        {
+            "id": 1,
+            "name": "TestTag"
+        }
+    ]
+}

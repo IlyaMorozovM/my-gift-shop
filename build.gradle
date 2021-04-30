@@ -1,0 +1,25 @@
+subprojects {
+    apply plugin: 'java-library'
+
+    ext.springVersion = '5.3.0'
+
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        // Spring
+        implementation group: 'org.springframework', name: 'spring-webmvc', version: springVersion
+        implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.11.3'
+
+        //Test
+        testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: '5.7.1'
+        testRuntimeOnly group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: '5.7.1'
+    }
+
+    test {
+        useJUnitPlatform()
+    }
+}
+
+

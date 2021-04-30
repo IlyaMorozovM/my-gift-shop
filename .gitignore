@@ -1,0 +1,10 @@
+.gradle
+.idea
+model/build
+persistence/build
+service/build
+service/logs
+web/build
+out
+web/out
+service/out
